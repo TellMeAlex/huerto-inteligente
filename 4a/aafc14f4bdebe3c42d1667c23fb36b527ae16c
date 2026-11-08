@@ -1,0 +1,14 @@
+docs/guiones-huerto-inteligente.md
+  h_72f012d83ce049 1-295
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "4aaafc14f4bdebe3c42d1667c23fb36b527ae16c",
+  "prompts": {},
+  "humans": {
+    "h_72f012d83ce049": {
+      "author": "Alejandro de la Fuente de la Rosa <alejandrodlfdlr@ext.inditex.com>"
+    }
+  }
+}
