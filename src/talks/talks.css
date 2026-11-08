@@ -327,3 +327,22 @@
   .speaker-progress{display:none}
   .notes-panel p{font-size:1.05rem}
 }
+
+/* Speaker view on phones: Notes / Next tabs and timer overlaid on the slide preview */
+.timer-overlay,.mobile-tabs{display:none}
+@media(max-width:700px){
+  .timer-panel{display:none}
+  .timer-overlay{position:absolute;z-index:5;right:.5rem;bottom:.5rem;display:flex;align-items:stretch;background:rgba(9,10,13,.86);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(6px)}
+  .timer-overlay button{border:0;background:transparent;color:#f6f4ef;display:flex;align-items:center;gap:.45rem;padding:.4rem .65rem;cursor:pointer}
+  .timer-overlay span{font-size:.7rem;color:var(--accent)}
+  .timer-overlay strong{font:500 1.2rem 'DM Mono',monospace}
+  .timer-overlay .quiet{color:#8e9096;border-left:1px solid rgba(255,255,255,.14);font-size:1rem}
+  .mobile-tabs{display:grid;grid-template-columns:1fr 1fr;border:1px solid #2c2f35}
+  .mobile-tabs button{height:44px;border:0;background:#111318;color:#8e9096;font:600 .95rem 'DM Sans',sans-serif;cursor:pointer}
+  .mobile-tabs button[aria-selected="true"]{background:var(--accent);color:var(--bg)}
+  .speaker-view[data-panel="notes"] .speaker-side{display:none}
+  .speaker-view[data-panel="next"] .notes-panel{display:none}
+  .speaker-view[data-panel="next"] .next-panel{display:block}
+  .notes-panel{border-top:0;padding-top:0}
+  .speaker-grid{grid-template-rows:none;align-content:start}
+}

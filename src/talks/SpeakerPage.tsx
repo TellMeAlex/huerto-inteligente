@@ -19,6 +19,7 @@ function Speaker({ talk }: { talk: NonNullable<ReturnType<typeof getTalk>> }) {
   const [startedAt, setStartedAt] = useState<number | null>(null)
   const [elapsed, setElapsed] = useState(0)
   const [overview, setOverview] = useState(false)
+  const [mobilePanel, setMobilePanel] = useState<'notes' | 'next'>('notes')
   const current = talk.slides[state.slide]
   const upcoming = talk.slides[state.slide + 1]
 
@@ -41,10 +42,13 @@ function Speaker({ talk }: { talk: NonNullable<ReturnType<typeof getTalk>> }) {
 
   const clock = useClock()
   const formattedElapsed = `${String(Math.floor(elapsed / 60)).padStart(2, '0')}:${String(elapsed % 60).padStart(2, '0')}`
+  const toggleTimer = () => { if (startedAt) setStartedAt(null); else setStartedAt(Date.now() - elapsed * 1000) }
+  const resetTimer = () => { setStartedAt(null); setElapsed(0) }
+  const timerLabel = startedAt ? 'Pausar' : elapsed ? 'Seguir' : 'Iniciar'
   const progress = Math.round(((state.slide + 1) / talk.slides.length) * 100)
 
   return (
-    <main className={`speaker-view theme-${talk.theme}`}>
+    <main className={`speaker-view theme-${talk.theme}`} data-panel={mobilePanel}>
       <header className="speaker-header">
         <div><Link to="/talks">TECH TALKS</Link><span>{talk.shortTitle}</span></div>
         <div className="speaker-status"><RelayStatusBadge status={relayStatus} /><button className="pair-button" onClick={() => setPairingOpen(true)}>📱 <span>Conectar móvil</span></button><strong>{clock}</strong></div>
@@ -52,11 +56,18 @@ function Speaker({ talk }: { talk: NonNullable<ReturnType<typeof getTalk>> }) {
       <section className="speaker-grid">
         <div className="speaker-main">
           <div className="speaker-label"><span>EN PANTALLA</span><strong>{state.slide + 1} / {talk.slides.length}</strong></div>
-          <div className="speaker-slide"><div className="slide-content">{current.content(state.step)}</div></div>
+          <div className="speaker-slide"><div className="slide-content">{current.content(state.step)}</div>
+            {/* Mobile only: compact timer over the slide preview to free vertical space. */}
+            <div className="timer-overlay"><button onClick={toggleTimer} aria-label={`${timerLabel} cronómetro`}><span aria-hidden="true">{startedAt ? '❚❚' : '▶'}</span><strong>{formattedElapsed}</strong></button><button className="quiet" onClick={resetTimer} aria-label="Reiniciar cronómetro">↺</button></div>
+          </div>
+        </div>
+        <div className="mobile-tabs" role="tablist" aria-label="Panel inferior">
+          <button role="tab" aria-selected={mobilePanel === 'notes'} onClick={() => setMobilePanel('notes')}>Notas</button>
+          <button role="tab" aria-selected={mobilePanel === 'next'} onClick={() => setMobilePanel('next')}>Siguiente{upcoming ? ` · ${String(state.slide + 2).padStart(2, '0')}` : ''}</button>
         </div>
         <aside className="speaker-side">
           <div className="next-panel"><div className="speaker-label"><span>SIGUIENTE</span></div>{upcoming ? <div className="speaker-slide next"><div className="slide-content">{upcoming.content(0)}</div></div> : <div className="end-card">FIN</div>}</div>
-          <div className="timer-panel"><div><small>TIEMPO</small><strong>{formattedElapsed}</strong></div><button onClick={() => { if (startedAt) { setStartedAt(null) } else { setStartedAt(Date.now() - elapsed * 1000) } }}>{startedAt ? 'Pausar' : elapsed ? 'Seguir' : 'Iniciar'}</button><button className="quiet" onClick={() => { setStartedAt(null); setElapsed(0) }}>↺</button></div>
+          <div className="timer-panel"><div><small>TIEMPO</small><strong>{formattedElapsed}</strong></div><button onClick={toggleTimer}>{timerLabel}</button><button className="quiet" onClick={resetTimer}>↺</button></div>
         </aside>
         <section className="notes-panel"><div className="speaker-label"><span>NOTAS · {current.title}</span></div><p>{current.notes}</p></section>
       </section>
