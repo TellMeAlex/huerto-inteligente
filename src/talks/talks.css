@@ -33,7 +33,7 @@
 /* Audience presentation */
 .presentation { position:fixed; inset:0; background:var(--bg); color:var(--ink); overflow:hidden; user-select:none; }
 .presentation * { box-sizing:border-box; }
-.slide-stage { position:absolute; inset:0; padding:5.5cqw 7.2cqw 4.6cqw; container-type:inline-size; display:flex; overflow:hidden; isolation:isolate; }
+.slide-stage { position:absolute; inset:0; margin:auto; width:min(100vw,177.78vh); height:min(100vh,56.25vw); padding:5.5cqw 7.2cqw 4.6cqw; container-type:inline-size; display:flex; overflow:hidden; isolation:isolate; }
 .slide-stage::after { content:''; position:absolute; inset:1.4rem; border:1px solid var(--line); pointer-events:none; z-index:-1; }
 .slide-content { width:100%; display:flex; flex-direction:column; justify-content:center; position:relative; z-index:2; }
 .slide-content h1, .slide-content h2, .slide-content p { max-width:none; }
@@ -175,39 +175,121 @@
 .overview-overlay{position:fixed;z-index:100;inset:0;background:#0b0c0f;padding:2rem;overflow:auto}.overview-overlay>header{display:flex;justify-content:space-between;align-items:center;max-width:1500px;margin:0 auto 2rem}.overview-overlay h2{font:600 2.2rem 'Fraunces';margin:.4rem 0}.overview-overlay>header button{border:0;background:transparent;color:#fff;font-size:2.5rem;cursor:pointer}.slide-grid{max-width:1500px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}.slide-grid>button{border:1px solid #2d3036;background:#111318;color:#eee;text-align:left;padding:.65rem;cursor:pointer}.slide-grid>button.active{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 35%,transparent)}.slide-grid>button>span{font:500 .65rem 'DM Mono';color:var(--accent)}.slide-grid>button>strong{display:block;font-size:.78rem;margin:.65rem .15rem .1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mini-slide{position:relative;container-type:inline-size;aspect-ratio:16/9;background:var(--bg);color:var(--ink);overflow:hidden;margin-top:.5rem}.mini-slide .slide-content{position:absolute;inset:0;padding:5.5cqw 7.2cqw 4.6cqw}
 
 @media(max-width:900px){.talks-index>header{display:block}.talks-index>header>p{max-width:none;width:auto;margin-top:2rem}.talk-catalogue{grid-template-columns:1fr}.talk-card{min-height:430px}.speaker-grid{grid-template-columns:1fr;overflow:auto}.speaker-side{display:grid;grid-template-columns:1fr 1fr}.notes-panel{grid-column:auto}.slide-grid{grid-template-columns:repeat(2,1fr)}}
-/* Projector pass: larger type and protected contrast for the garden talk. */
-.presentation.theme-garden .slide-eyebrow{font-size:1.3cqw;font-weight:700;letter-spacing:.12em}
-.presentation.theme-garden .lead{font-size:2.1cqw;line-height:1.3;font-weight:700}
-.presentation.theme-garden .slide-meta{font-size:1cqw;font-weight:700;color:#eef4e7;text-shadow:0 2px 5px rgba(0,0,0,.95)}
-.presentation.theme-garden .slide-content h1,.presentation.theme-garden .slide-content h2{text-wrap:balance}
-.presentation.theme-garden .garden-scene .story-scene-shade{background:linear-gradient(90deg,#ffedca 0%,#ffedca 50%,rgba(255,237,202,.97) 57%,rgba(255,237,202,.6) 68%,transparent 80%)}
-.presentation.theme-garden .garden-scene.is-climax .story-scene-shade{background:linear-gradient(90deg,#ffedca 0%,#ffedca 52%,rgba(255,237,202,.97) 59%,rgba(255,237,202,.6) 69%,transparent 80%)}
-.presentation.theme-garden .garden-cover-copy h1{font-size:5.35cqw;line-height:.95;color:#102a1b}
-.presentation.theme-garden .garden-scene .lead{color:#263d2d;max-width:42cqw}
-.presentation.theme-garden .garden-compact-copy{width:51cqw}
-.presentation.theme-garden .garden-compact-copy h2{font-size:4.35cqw;line-height:.97;color:#102a1b}
-.presentation.theme-garden .scene-story-list.garden-list{gap:.58cqw}
-.presentation.theme-garden .scene-story-list.garden-list>div span{background:#fff8e8;color:#102a1b;border-width:.22cqw;box-shadow:.3cqw .3cqw 0 #668b3b;font-size:1.38cqw;padding:.78cqw 1.08cqw}
-.presentation.theme-garden .scene-story-list.garden-list b{font-size:.8cqw}
-.presentation.theme-garden .garden-diagnosis{gap:.72cqw}
-.presentation.theme-garden .garden-diagnosis span{background:#fff8e8;border-width:.22cqw;padding:.86cqw 1.16cqw;font-size:1.38cqw;box-shadow:.3cqw .3cqw 0 #c5912f}
-.presentation.theme-garden .garden-diagnosis b{font-size:.8cqw}
-.presentation.theme-garden .scene-footnote{font-size:1.25cqw;font-weight:700;color:#30452f}
-.presentation.theme-garden .garden-climax-copy{width:55cqw}
-.presentation.theme-garden .garden-climax-copy .big-quote p{font-size:3.7cqw;line-height:1.05;color:#102a1b}
-.presentation.theme-garden .garden-climax-copy>p{font-size:1.8cqw;color:#6f2819}
-.presentation.theme-garden .headline-wall{gap:1.25cqw}
-.presentation.theme-garden .headline-wall span{padding:1.3cqw 1.75cqw;font-size:2cqw;box-shadow:0 .4cqw 1cqw rgba(0,0,0,.32)}
-.presentation.theme-garden .question-shift small{font-size:1.15cqw;font-weight:700}
-.presentation.theme-garden .question-shift p{font-size:2.9cqw;color:#e3eadc}
-.presentation.theme-garden .tomato-row span{font-size:5.2cqw}
-.presentation.theme-garden .tomato-row p{font-size:2.3cqw;line-height:1.18;font-weight:700;max-width:37cqw}
-.presentation.theme-garden .learning-path span{width:3.1cqw;height:3.1cqw;font-size:1.18cqw}
-.presentation.theme-garden .learning-path strong{font-size:1.72cqw;font-weight:700}
-.presentation.theme-garden .learning-path b{font-size:2.1cqw}
-.presentation.theme-garden .giant-follow{font-size:4.55cqw;font-weight:700}
-.presentation.theme-garden .numbered-item>span{font-size:1.3cqw;font-weight:700}
-.presentation.theme-garden .numbered-item strong{font-size:2.08cqw;font-weight:700}
-.presentation.theme-garden .story-stage-label{font-size:.9cqw;padding:.62cqw .85cqw}
+/* Projector pass · garden talk.
+   Every size is relative to the 16:9 stage content box (1cqw = 16.4px at 1080p), so the slide
+   keeps its proportions on any projector. Scale: body >= 2.05cqw (~34px), support >= 1.65cqw
+   (~27px), decorative >= 1.15cqw (~19px). Scoped to .theme-garden so the speaker view matches. */
+.theme-garden .slide-eyebrow{font-size:1.65cqw;font-weight:700;letter-spacing:.1em}
+.theme-garden .lead{font-size:2.1cqw;line-height:1.3;font-weight:700}
+.theme-garden .slide-meta{font-size:1.15cqw;font-weight:700;color:#eef4e7;text-shadow:0 2px 5px rgba(0,0,0,.95)}
+.theme-garden .slide-content h1,.theme-garden .slide-content h2{text-wrap:balance}
+.theme-garden .reveal{transform:translateY(2.2cqw) scale(.97);transition:opacity .5s ease,transform .65s cubic-bezier(.2,1.25,.3,1)}
+.theme-garden .reveal.is-visible{transform:none}
 
-@media(prefers-reduced-motion:reduce){.reveal{transition:none}.presentation-controls{transition:none}}
+/* Illustrated scenes */
+.theme-garden .story-scene>img,.theme-garden .story-scene-hotspots{animation:garden-drift 14s ease-in-out infinite alternate;transform-origin:75% 50%}
+.theme-garden .story-scene-hotspots{position:absolute;inset:-.4%;width:100.8%;height:100.8%;pointer-events:none;z-index:1}
+@keyframes garden-drift{from{transform:scale(1)}to{transform:scale(1.035)}}
+.theme-garden .garden-scene .story-scene-shade{background:linear-gradient(90deg,#ffedca 0%,#ffedca 52%,rgba(255,237,202,.92) 58%,rgba(255,237,202,.45) 65%,transparent 72%)}
+.theme-garden .garden-scene.is-climax .story-scene-shade{background:linear-gradient(90deg,#ffedca 0%,#ffedca 54%,rgba(255,237,202,.92) 60%,rgba(255,237,202,.45) 67%,transparent 74%)}
+.theme-garden .story-scene-copy{z-index:2}
+.theme-garden .story-stage-label{font-size:1.15cqw;padding:.62cqw .85cqw;z-index:2}
+.theme-garden .garden-cover-copy h1{font-size:5.35cqw;line-height:.95;color:#102a1b}
+.theme-garden .garden-scene .lead{color:#263d2d;max-width:42cqw}
+.theme-garden .garden-compact-copy{width:50cqw}
+.theme-garden .garden-compact-copy h2{font-size:4.35cqw;line-height:.97;color:#102a1b}
+.theme-garden .scene-story-list.garden-list,.theme-garden .garden-diagnosis{gap:.8cqw}
+.theme-garden .scene-story-list.garden-list>div span,.theme-garden .garden-diagnosis span{background:#fff8e8;color:#102a1b;border-width:.22cqw;font-size:2.05cqw;line-height:1.15;padding:.85cqw 1.2cqw;gap:1cqw}
+.theme-garden .scene-story-list.garden-list>div span{box-shadow:.3cqw .3cqw 0 #668b3b}
+.theme-garden .garden-diagnosis span{box-shadow:.3cqw .3cqw 0 #c5912f}
+.theme-garden .scene-story-list.garden-list b,.theme-garden .garden-diagnosis b{font-size:1.25cqw}
+.theme-garden .scene-footnote{font-size:1.95cqw;font-weight:700;color:#30452f;margin-top:1.6cqw}
+
+/* Hotspots pinned to the illustration */
+.hotspot{position:absolute;width:7cqw;height:7cqw;translate:-50% -50%;opacity:0;scale:.5;transition:opacity .4s ease,scale .6s cubic-bezier(.3,1.6,.4,1)}
+.hotspot.is-on{opacity:1;scale:1}
+.hotspot>i{position:absolute;inset:0;border-radius:50%;border:.5cqw solid #ffd84a;box-shadow:0 0 0 .35cqw rgba(16,42,27,.75),inset 0 0 0 .3cqw rgba(16,42,27,.55),0 0 2.4cqw rgba(255,216,74,.7);transition:opacity .4s ease,border-color .4s ease}
+.hotspot.is-on:not(.is-current)>i{opacity:.85}
+.hotspot.is-current>i::after{content:'';position:absolute;inset:-.5cqw;border-radius:50%;border:.5cqw solid #ffd84a;animation:hotspot-pulse 1.6s ease-out infinite}
+.hotspot.verified>i,.hotspot.verified>i::after{border-color:#7bd65a}
+.hotspot>b{position:absolute;right:-1.5cqw;top:-1.5cqw;width:3.4cqw;height:3.4cqw;border-radius:50%;background:#fff8e8;border:.2cqw solid #102a1b;display:grid;place-items:center;font-size:1.8cqw;box-shadow:.25cqw .25cqw 0 #668b3b}
+.hotspot.bare{width:auto;height:auto}
+.hotspot.bare>i{display:none}
+.hotspot.bare>b{position:static;width:auto;height:auto;background:none;border:0;box-shadow:none;font-size:5cqw;filter:drop-shadow(0 .4cqw .5cqw rgba(16,42,27,.35))}
+.hotspot.float.is-on>b{animation:cloud-drift 4s ease-in-out infinite alternate}
+.hotspot.crawl.is-on{animation:snail-crawl 10s linear forwards}
+.hotspot.tag{width:auto;height:auto}
+.hotspot.tag>i{display:none}
+.hotspot>em{display:block;white-space:nowrap;background:#102a1b;color:#fff8e8;font:700 1.8cqw/1 'DM Sans',sans-serif;font-style:normal;padding:.8cqw 1.1cqw;border-radius:.5cqw;rotate:-2deg;box-shadow:.3cqw .3cqw 0 #c5912f}
+@keyframes hotspot-pulse{from{transform:scale(1);opacity:.9}to{transform:scale(1.7);opacity:0}}
+@keyframes cloud-drift{from{transform:translateX(-1.5cqw)}to{transform:translateX(1.5cqw)}}
+@keyframes snail-crawl{from{margin-left:0}to{margin-left:7cqw}}
+
+/* 02 · headline wall */
+.theme-garden .headline-wall{gap:1.25cqw}
+.theme-garden .headline-wall span{padding:1.3cqw 1.75cqw;font-size:2cqw;box-shadow:0 .4cqw 1cqw rgba(0,0,0,.32)}
+
+/* 03 · the strike is drawn when the better question arrives */
+.theme-garden .question-shift small{font-size:1.65cqw;font-weight:700}
+.theme-garden .question-shift p{font-size:2.9cqw;color:#e3eadc;transition:opacity .5s ease .2s}
+.theme-garden .crossed::after{transform:rotate(-4deg) scaleX(0);transform-origin:left center;transition:transform .55s cubic-bezier(.6,0,.3,1)}
+.theme-garden .crossed.is-struck::after{transform:rotate(-4deg) scaleX(1)}
+.theme-garden .crossed.is-struck p{opacity:.5}
+.theme-garden .question-shift>.reveal:nth-child(2).is-visible{transition-delay:.45s}
+
+/* 04 · four tomatoes become infrastructure */
+.theme-garden .tomato-row{gap:3cqw}
+.tomato-plants{display:flex;gap:.9cqw}
+.theme-garden .tomato-plants .reveal{transform:translateY(3cqw) scale(.2) rotate(-25deg);transition:opacity .25s ease,transform .6s cubic-bezier(.3,1.6,.4,1)}
+.theme-garden .tomato-plants .reveal.is-visible{transform:none}
+.theme-garden .tomato{display:block;font-size:5.2cqw;line-height:1;transition:filter .8s ease,opacity .8s ease}
+.tomatoes.is-empty .tomato{filter:grayscale(1);opacity:.45}
+.theme-garden .tomato-row p{font:700 2.3cqw/1.18 'Fraunces',serif;max-width:37cqw;color:var(--accent);margin:0}
+.infra-stack{display:flex;flex-wrap:wrap;gap:1cqw;margin-top:2.6cqw}
+.infra-stack span{display:block;padding:.9cqw 1.3cqw;border:.18cqw solid var(--accent);background:var(--surface);color:var(--ink);font:700 2.05cqw 'DM Sans',sans-serif}
+.reveal.is-visible .infra-stack span{animation:chip-in .55s cubic-bezier(.2,1.3,.3,1) both;animation-delay:calc(var(--i) * .14s)}
+@keyframes chip-in{from{opacity:0;transform:translateY(1.5cqw) scale(.9)}}
+.tomato-punch{margin:2.4cqw 0 0;font:600 2.6cqw 'Fraunces',serif;color:var(--accent2)}
+.tomato-punch b{font-size:3.6cqw;color:#ff6b4a}
+
+/* 07 · a growing stem: each capability unlocks the next */
+.growth-slide h2{margin-bottom:1cqw}
+.growth{position:relative;height:30cqw}
+.growth svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.growth-ghost{fill:none;stroke:var(--line);stroke-width:3;stroke-dasharray:.6 1.4}
+.growth-stem{fill:none;stroke:var(--accent);stroke-width:6.5;stroke-linecap:round;stroke-dasharray:100;transition:stroke-dashoffset .9s cubic-bezier(.5,0,.3,1)}
+.growth-node{position:absolute;display:flex;flex-direction:column;align-items:center;gap:.8cqw;translate:-50% -2.6cqw;opacity:0;scale:.4;transition:opacity .35s ease .45s,scale .6s cubic-bezier(.3,1.6,.4,1) .45s}
+.growth-node.is-on{opacity:1;scale:1}
+.growth-node>span{position:relative;width:5.2cqw;height:5.2cqw;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:.3cqw solid var(--accent);font-size:2.5cqw;box-shadow:0 0 0 .5cqw var(--bg)}
+.growth-node.is-current>span::after{content:'';position:absolute;inset:-.3cqw;border-radius:50%;border:.3cqw solid var(--accent);animation:hotspot-pulse 1.6s ease-out infinite}
+.growth-node strong{font:700 2.4cqw 'DM Sans',sans-serif;white-space:nowrap;transition:color .4s ease}
+.growth-node.is-on:not(.is-current) strong{color:var(--muted)}
+
+/* 08 · from screen to outdoors */
+.paradox{position:absolute;inset:-5.5cqw -7.2cqw -4.6cqw;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:11cqw 7.2cqw 0;text-align:center}
+.paradox-screen,.paradox-sky{position:absolute;inset:0;pointer-events:none;transition:opacity 1.4s ease}
+.paradox-screen{background:radial-gradient(ellipse 60% 55% at 50% 42%,rgba(140,210,255,.14),transparent 70%),repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 .12cqw,transparent .12cqw .45cqw)}
+.paradox-sky{opacity:0;background:linear-gradient(180deg,#ffe3a1 0%,#ffedca 52%,#f6e3b8 100%)}
+.paradox-sun{position:absolute;left:50%;bottom:9%;width:15cqw;height:15cqw;margin-left:-7.5cqw;border-radius:50%;background:radial-gradient(circle,#ffd447 0 55%,rgba(255,212,71,.35) 56%,transparent 70%);transform:translateY(70%);transition:transform 2s cubic-bezier(.2,.8,.2,1) .3s}
+.paradox-hills{position:absolute;left:0;right:0;bottom:0;height:22%;background:radial-gradient(70% 120% at 25% 100%,#7ea84f 60%,transparent 61%),radial-gradient(75% 110% at 80% 100%,#5f8f3d 60%,transparent 61%)}
+.paradox.is-outside .paradox-screen{opacity:0}
+.paradox.is-outside .paradox-sky{opacity:1}
+.paradox.is-outside .paradox-sun{transform:translateY(0)}
+.paradox-copy{position:relative}
+.paradox h2,.paradox .giant-follow,.paradox .slide-eyebrow{transition:color 1.2s ease}
+.paradox.is-outside h2{color:#102a1b}
+.paradox.is-outside .slide-eyebrow{color:#8c3f28}
+.paradox.is-outside .giant-follow{color:#c7512f}
+.theme-garden .giant-follow{font-size:4.55cqw;font-weight:700;margin:0}
+
+/* 09 · compass list */
+.theme-garden .numbered-item>span{font-size:1.65cqw;font-weight:700}
+.theme-garden .numbered-item strong{font-size:2.08cqw;font-weight:700}
+
+/* 10 · closing */
+.theme-garden .garden-climax-copy{width:55cqw}
+.theme-garden .garden-climax-copy .big-quote p{font-size:3.8cqw;line-height:1.06;color:#102a1b}
+.theme-garden .garden-climax-copy>p{font-size:2.4cqw;color:#6f2819;margin-top:2.4cqw}
+.theme-garden .garden-climax-copy>p em{font-style:normal;color:#c7512f}
+
+@media(prefers-reduced-motion:reduce){.reveal{transition:none}.presentation-controls{transition:none}.story-scene>img,.story-scene-hotspots,.hotspot,.hotspot>b,.hotspot>i::after,.growth-node>span::after{animation:none!important}}

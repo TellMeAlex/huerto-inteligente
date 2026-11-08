@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import type { Talk } from './types.ts'
 
 function Reveal({ at, step, children }: { at: number; step: number; children: ReactNode }) {
@@ -56,7 +56,21 @@ function FireScene({ stage, children, climax = false }: { stage: 1 | 2 | 3 | 4; 
   )
 }
 
-function StoryScene({ kind, stage, children, climax = false }: { kind: 'electric' | 'garden'; stage: 1 | 2 | 3 | 4; children: ReactNode; climax?: boolean }) {
+type HotspotProps = { x: number; y: number; on: boolean; current?: boolean; icon?: string; label?: string; variant?: 'ring' | 'bare' | 'float' | 'crawl' | 'tag' | 'verified' }
+
+/** Marker pinned to an illustration, positioned in % of the 16:9 scene. */
+function Hotspot({ x, y, on, current = false, icon, label, variant = 'ring' }: HotspotProps) {
+  const variants = variant === 'float' || variant === 'crawl' ? `bare ${variant}` : variant
+  return (
+    <div className={`hotspot ${variants} ${on ? 'is-on' : ''} ${on && current ? 'is-current' : ''}`} style={{ left: `${x}%`, top: `${y}%` }}>
+      <i />
+      {icon && <b>{icon}</b>}
+      {label && <em>{label}</em>}
+    </div>
+  )
+}
+
+function StoryScene({ kind, stage, children, climax = false, hotspots }: { kind: 'electric' | 'garden'; stage: 1 | 2 | 3 | 4; children: ReactNode; climax?: boolean; hotspots?: ReactNode }) {
   const talkId = kind === 'electric' ? 'ovejas-electricas' : 'huerto-inteligente'
   const assetVersion = kind === 'garden' ? 'garden-arm-fix-v2' : 'visual-sequence-v1'
   const assetPath = `${import.meta.env.BASE_URL}talk-assets/${talkId}/stage-${stage}.png?v=${assetVersion}`
@@ -65,6 +79,7 @@ function StoryScene({ kind, stage, children, climax = false }: { kind: 'electric
       <img src={assetPath} alt="" aria-hidden="true" />
       <div className="story-scene-shade" />
       <div className="story-scene-fx" aria-hidden="true" />
+      {hotspots && <div className="story-scene-hotspots" aria-hidden="true">{hotspots}</div>}
       <div className="story-scene-copy">{children}</div>
       <span className="story-stage-label">{kind === 'electric' ? 'SEÑAL' : 'CULTIVO'} · 0{stage}</span>
     </div>
@@ -124,11 +139,42 @@ const electricSlides: Talk['slides'] = [
   },
 ]
 
+const growthSteps = [
+  { x: 7, y: 80, icon: '🌱', label: 'Cultivar' },
+  { x: 28, y: 62, icon: '💧', label: 'Regar' },
+  { x: 49, y: 45, icon: '📡', label: 'Sensorizar' },
+  { x: 70, y: 27, icon: '📈', label: 'Interpretar' },
+  { x: 90, y: 10, icon: '🧠', label: 'Comprender' },
+]
+// viewBox 1000x350 matches the 85.6cqw x 30cqw box, so x = left% * 10 and y = top% * 3.5.
+const growthPath = 'M70 280 C170 280 190 217 280 217 S400 157.5 490 157.5 S610 94.5 700 94.5 S810 35 900 35'
+
+/** A stem that draws itself between capabilities: each click unlocks the next node. */
+function Growth({ step }: { step: number }) {
+  const reached = Math.max(0, step - 1)
+  return (
+    <div className="growth">
+      <svg viewBox="0 0 1000 350" preserveAspectRatio="none" aria-hidden="true">
+        <path className="growth-ghost" d={growthPath} pathLength={100} />
+        <path className="growth-stem" d={growthPath} pathLength={100} style={{ strokeDashoffset: 100 - reached * 25 }} />
+      </svg>
+      {growthSteps.map((node, index) => (
+        <div key={node.label} className={`growth-node ${step > index ? 'is-on' : ''} ${step === index + 1 ? 'is-current' : ''}`} style={{ left: `${node.x}%`, top: `${node.y}%` }}>
+          <span aria-hidden="true">{node.icon}</span>
+          <strong>{node.label}</strong>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+const infraLayers = ['💧 Riego', '📡 Sensores', '⚙️ Automatización', '📊 Observabilidad']
+
 const gardenSlides: Talk['slides'] = [
   {
     id:'portada', title:'El agotamiento de vivir en la frontera',
     notes:'El primer brote es el inicio de toda la secuencia. El personaje está basado en ti, ya fuera del traje y en un contexto tangible. Abrir contando la sensación de perseguir la siguiente novedad. Después revelar que la salida no fue alejarte de la tecnología, sino usarla para acercarte a algo real.',
-    content:()=> <StoryScene kind="garden" stage={1}><div className="garden-cover-copy"><Eyebrow>02 · IA aplicada a la vida</Eyebrow><h1>El agotamiento de vivir<br/>en <em>la frontera</em></h1><p className="lead">Y cómo la IA me ayudó a cultivar un huerto.</p></div></StoryScene>,
+    content:()=> <StoryScene kind="garden" stage={1}><div className="garden-cover-copy"><Eyebrow>01 · IA aplicada a la vida</Eyebrow><h1>El agotamiento de vivir<br/>en <em>la frontera</em></h1><p className="lead">Y cómo la IA me ayudó a cultivar un huerto.</p></div></StoryScene>,
   },
   {
     id:'ruido', title:'Todo lo cambia todo', fragments:4,
@@ -137,33 +183,33 @@ const gardenSlides: Talk['slides'] = [
   },
   {
     id:'pregunta', title:'Cambiar la pregunta', fragments:2,
-    notes:'Marcar una pausa real entre las dos preguntas. La segunda cambia el foco desde el catálogo de herramientas hacia la intención personal.',
-    content:(step)=><div className="question-shift"><Reveal at={1} step={step}><div className="crossed"><small>La pregunta agotadora</small><p>¿Qué herramienta nueva debería aprender hoy?</p></div></Reveal><Reveal at={2} step={step}><div><small>La pregunta fértil</small><h2>¿Qué quiero ser capaz de <em>hacer</em>?</h2></div></Reveal></div>,
+    notes:'Primer clic: la pregunta agotadora. Marcar una pausa real. Segundo clic: se tacha y aparece la pregunta fértil, que cambia el foco desde el catálogo de herramientas hacia la intención personal.',
+    content:(step)=><div className="question-shift"><Reveal at={1} step={step}><div className={`crossed ${step >= 2 ? 'is-struck' : ''}`}><small>La pregunta agotadora</small><p>¿Qué herramienta nueva debería aprender hoy?</p></div></Reveal><Reveal at={2} step={step}><div><small>La pregunta fértil</small><h2>¿Qué quiero ser capaz de <em>hacer</em>?</h2></div></Reveal></div>,
   },
   {
-    id:'tomates', title:'Cuatro tomates', fragments:2,
-    notes:'Contar el origen real del huerto. La comicidad está en el contraste entre una aspiración sencilla y el reflejo profesional de convertirla en un sistema.',
-    content:(step)=><div><Eyebrow>Proyecto personal · alcance inicial</Eyebrow><h2>Yo solo quería plantar<br/>cuatro tomates.</h2><div className="tomato-row"><Reveal at={1} step={step}><span>🍅</span><span>🍅</span><span>🍅</span><span>🍅</span></Reveal><Reveal at={2} step={step}><p>Y terminé diseñando una infraestructura crítica.</p></Reveal></div></div>,
+    id:'tomates', title:'Cuatro tomates', fragments:6,
+    notes:'Un clic por tomate (1-4), contados en voz alta con calma. Quinto clic: «pero soy programador» y aparecen las capas de infraestructura. Sexto clic: los tomates se apagan y aparece el contador. Remate: «lo único que no tenía era tomates».',
+    content:(step)=><div className={`tomatoes ${step >= 6 ? 'is-empty' : ''}`}><Eyebrow>Proyecto personal · alcance inicial</Eyebrow><h2>Yo solo quería plantar<br/>cuatro tomates.</h2><div className="tomato-row"><div className="tomato-plants">{[0,1,2,3].map((i)=><Reveal at={i+1} step={step} key={i}><span className="tomato">🍅</span></Reveal>)}</div><Reveal at={5} step={step}><p>Y terminé diseñando una infraestructura crítica.</p></Reveal></div><Reveal at={5} step={step}><div className="infra-stack">{infraLayers.map((layer,i)=><span key={layer} style={{ '--i': i } as CSSProperties}>{layer}</span>)}</div></Reveal><Reveal at={6} step={step}><p className="tomato-punch">Tomates en producción: <b>0</b></p></Reveal></div>,
   },
   {
     id:'arquitectura', title:'Arquitectura del huerto', fragments:4,
-    notes:'Segunda etapa: ya hay cuatro tomateras, riego por goteo, sensor y temporizador. Recorrer cada capa como si fuera una arquitectura empresarial. La naturaleza es el sistema legacy, el clima una dependencia externa y los caracoles los threat actors.',
-    content:(step)=><StoryScene kind="garden" stage={2}><div className="garden-compact-copy"><Eyebrow>Arquitectura de referencia</Eyebrow><h2>El huerto también<br/>tenía stack.</h2><div className="scene-story-list garden-list">{['Sensores · observabilidad','Riego · automatización','Clima · dependencia externa','Caracoles · threat actors'].map((item,index)=><Reveal at={index+1} step={step} key={item}><span><b>0{index+1}</b>{item}</span></Reveal>)}</div></div></StoryScene>,
+    notes:'Segunda etapa: ya hay cuatro tomateras, riego por goteo, sensor y temporizador. Recorrer cada capa como si fuera una arquitectura empresarial: cada clic marca su pieza en la ilustración (móvil, goteo, nube y un caracol que entra en escena). La naturaleza es el sistema legacy, el clima una dependencia externa y los caracoles los threat actors.',
+    content:(step)=><StoryScene kind="garden" stage={2} hotspots={<><Hotspot x={72.7} y={41} icon="📡" on={step>=1} current={step===1}/><Hotspot x={70.6} y={73} icon="💧" on={step>=2} current={step===2}/><Hotspot x={66} y={13} icon="⛅" variant="float" on={step>=3}/><Hotspot x={60} y={85} icon="🐌" variant="crawl" on={step>=4}/></>}><div className="garden-compact-copy"><Eyebrow>Arquitectura de referencia</Eyebrow><h2>El huerto también<br/>tenía stack.</h2><div className="scene-story-list garden-list">{['Sensores · observabilidad','Riego · automatización','Clima · dependencia externa','Caracoles · threat actors'].map((item,index)=><Reveal at={index+1} step={step} key={item}><span><b>0{index+1}</b>{item}</span></Reveal>)}</div></div></StoryScene>,
   },
   {
     id:'plagas', title:'Detectar plagas', fragments:3,
-    notes:'Tercera etapa: el huerto ya está vivo y aparece el primer problema real. Contar la secuencia concreta: ves una hoja dañada, haces una foto, obtienes hipótesis y después verificas. La IA ayuda a empezar; no convierte una foto en diagnóstico infalible.',
-    content:(step)=><StoryScene kind="garden" stage={3}><div className="garden-compact-copy"><Eyebrow>Del síntoma a la acción</Eyebrow><h2>Una foto no me<br/>hizo experto.</h2><div className="garden-diagnosis"><Reveal at={1} step={step}><span><b>01</b>Observar</span></Reveal><Reveal at={2} step={step}><span><b>02</b>Formular una hipótesis</span></Reveal><Reveal at={3} step={step}><span><b>03</b>Verificar antes de actuar</span></Reveal></div><p className="scene-footnote">Me ayudó a hacer una pregunta mejor.</p></div></StoryScene>,
+    notes:'Tercera etapa: el huerto ya está vivo y aparece el primer problema real. Contar la secuencia concreta: ves una hoja dañada, haces una foto, obtienes hipótesis y después verificas. La IA ayuda a empezar; no convierte una foto en diagnóstico infalible. En la ilustración, la hoja se marca al observar, aparece la hipótesis y el anillo pasa a verde solo al verificar.',
+    content:(step)=><StoryScene kind="garden" stage={3} hotspots={<><Hotspot x={70} y={42.5} icon={step>=3?'✅':'🔍'} variant={step>=3?'verified':'ring'} on={step>=1} current={step===1||step===3}/><Hotspot x={80} y={20} label="¿Hongo? ¿Plaga?" variant="tag" on={step>=2}/></>}><div className="garden-compact-copy"><Eyebrow>Del síntoma a la acción</Eyebrow><h2>Una foto no me<br/>hizo experto.</h2><div className="garden-diagnosis"><Reveal at={1} step={step}><span><b>01</b>Observar</span></Reveal><Reveal at={2} step={step}><span><b>02</b>Formular una hipótesis</span></Reveal><Reveal at={3} step={step}><span><b>03</b>Verificar antes de actuar</span></Reveal></div><p className="scene-footnote">Me ayudó a hacer una pregunta mejor.</p></div></StoryScene>,
   },
   {
     id:'cadena', title:'Una curiosidad llama a otra', fragments:5,
-    notes:'Hacer avanzar la cadena paso a paso. El valor no es solo la respuesta final: cada respuesta permite formular la siguiente pregunta y entrar en disciplinas nuevas.',
-    content:(step)=><div><Eyebrow>Aprendizaje generativo</Eyebrow><h2>Una capacidad abrió la siguiente.</h2><div className="learning-path">{['Cultivar','Regar','Sensorizar','Interpretar','Comprender'].map((x,i)=><Reveal at={i+1} step={step} key={x}><div><span>{i+1}</span><strong>{x}</strong>{i<4&&<b>↗</b>}</div></Reveal>)}</div></div>,
+    notes:'Un clic por capacidad: el tallo crece hasta el siguiente nodo y el actual late. Hacer avanzar la cadena paso a paso. El valor no es solo la respuesta final: cada respuesta permite formular la siguiente pregunta y entrar en disciplinas nuevas.',
+    content:(step)=><div className="growth-slide"><Eyebrow>Aprendizaje generativo</Eyebrow><h2>Una capacidad abrió la siguiente.</h2><Growth step={step}/></div>,
   },
   {
     id:'paradoja', title:'La paradoja', fragments:2,
-    notes:'Este es el giro emocional de la charla. La tecnología que parecía encerrarnos en una pantalla también puede ser una puerta hacia lo físico, si elegimos bien el propósito.',
-    content:(step)=><div className="centered"><Eyebrow>La paradoja</Eyebrow><h2>Usé más inteligencia artificial…</h2><Reveal at={1} step={step}><p className="giant-follow">para depender menos de una pantalla.</p></Reveal><Reveal at={2} step={step}><div className="sun-line"><span>☀</span><i/></div></Reveal></div>,
+    notes:'La diapositiva empieza como una pantalla oscura. Primer clic: la segunda frase. Segundo clic: se hace de día y sale el sol; dejar que la transición respire antes de hablar. Este es el giro emocional de la charla. La tecnología que parecía encerrarnos en una pantalla también puede ser una puerta hacia lo físico, si elegimos bien el propósito.',
+    content:(step)=><div className={`paradox ${step >= 2 ? 'is-outside' : ''}`}><div className="paradox-screen" aria-hidden="true"/><div className="paradox-sky" aria-hidden="true"><span className="paradox-sun"/><i className="paradox-hills"/></div><div className="paradox-copy"><Eyebrow>La paradoja</Eyebrow><h2>Usé más inteligencia artificial…</h2><Reveal at={1} step={step}><p className="giant-follow">para depender menos de una pantalla.</p></Reveal></div></div>,
   },
   {
     id:'lugar', title:'La tecnología en su lugar', fragments:4,
@@ -171,9 +217,9 @@ const gardenSlides: Talk['slides'] = [
     content:(step)=><div><Eyebrow>Una brújula, no un destino</Eyebrow><h2>La tecnología está en su lugar cuando…</h2><NumberedList step={step} items={[{title:'Amplía mi autonomía'},{title:'Convierte curiosidad en acción'},{title:'Me conecta con el mundo físico'},{title:'Me deja una capacidad nueva'}]}/></div>,
   },
   {
-    id:'cierre', title:'Tecnología y tomates',
-    notes:'La tecnología queda finalmente en el bolsillo; el centro es la cosecha. Cerrar con una imagen optimista y concreta. Pausa después de “ordenador”. El último remate puede acompañarse con una sonrisa, no necesita explicación.',
-    content:()=> <StoryScene kind="garden" stage={4} climax><div className="garden-climax-copy"><BigQuote>Pensaba que usar IA consistía en pasar más tiempo delante del ordenador. Terminó ayudándome a pasar más tiempo fuera de él.</BigQuote><p>El futuro puede ser tecnología <em>y</em> mejores tomates.</p></div></StoryScene>,
+    id:'cierre', title:'Una métrica de progreso',
+    notes:'La tecnología queda finalmente en el bolsillo; el centro es la cosecha. Leer la cita despacio y hacer pausa antes de «a cultivar tomates». El remate «No es una mala métrica de progreso» va con una sonrisa, sin explicarlo.',
+    content:()=> <StoryScene kind="garden" stage={4} climax><div className="garden-climax-copy"><BigQuote>Si alguien me pregunta qué he aprendido esta semana, puedo responder algo concreto: a cultivar tomates.</BigQuote><p>No es una mala <em>métrica de progreso</em>.</p></div></StoryScene>,
   },
 ]
 
