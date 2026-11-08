@@ -1,0 +1,29 @@
+README.md
+  s_aaccf5c23de866::t_2507601bcce682 25-40
+package-lock.json
+  s_aaccf5c23de866::t_bef0c45bc83948 12,23,1865-1874,1944-1967,2025-2033,2105-2133,2710-2718,2773-2778,2795-2800,2934-2946,2972-2980,3115-3123,3486-3497,4454-4489,4527-4535,4556-4564,4620-4636,4799-4813,4906-4911,4944-4957,4972-4983,5339-5364,5387-5421
+package.json
+  s_aaccf5c23de866::t_a6df76cb4be5f1 14,25
+src/talks/PresentationPage.tsx
+  s_aaccf5c23de866::t_664bbc2a2f76ea 5,16,18-19,57-58,60,81-82,87-88
+src/talks/SpeakerPage.tsx
+  s_aaccf5c23de866::t_c51a46bc3ec28b 5,16-18,50,69,75-91
+src/talks/talks.css
+  s_aaccf5c23de866::t_0673c4b0cf9bd0 296-329
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "e4e2049d159adfa9fcd6ce54767e2e30782cf364",
+  "prompts": {},
+  "sessions": {
+    "s_aaccf5c23de866": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3488da3e-5c40-41d3-8a47-d213cde73b4f",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Alejandro de la Fuente de la Rosa <alejandrodlfdlr@ext.inditex.com>"
+    }
+  }
+}
