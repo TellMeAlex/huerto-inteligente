@@ -217,13 +217,13 @@
 .hotspot.bare>i{display:none}
 .hotspot.bare>b{position:static;width:auto;height:auto;background:none;border:0;box-shadow:none;font-size:5cqw;filter:drop-shadow(0 .4cqw .5cqw rgba(16,42,27,.35))}
 .hotspot.float.is-on>b{animation:cloud-drift 4s ease-in-out infinite alternate}
-.hotspot.crawl.is-on{animation:snail-crawl 10s linear forwards}
+.hotspot.crawl.is-on{animation:bug-crawl 10s linear forwards}
 .hotspot.tag{width:auto;height:auto}
 .hotspot.tag>i{display:none}
 .hotspot>em{display:block;white-space:nowrap;background:#102a1b;color:#fff8e8;font:700 1.8cqw/1 'DM Sans',sans-serif;font-style:normal;padding:.8cqw 1.1cqw;border-radius:.5cqw;rotate:-2deg;box-shadow:.3cqw .3cqw 0 #c5912f}
 @keyframes hotspot-pulse{from{transform:scale(1);opacity:.9}to{transform:scale(1.7);opacity:0}}
 @keyframes cloud-drift{from{transform:translateX(-1.5cqw)}to{transform:translateX(1.5cqw)}}
-@keyframes snail-crawl{from{margin-left:0}to{margin-left:7cqw}}
+@keyframes bug-crawl{from{margin-left:0}to{margin-left:7cqw}}
 
 /* 02 · headline wall */
 .theme-garden .headline-wall{gap:1.25cqw}

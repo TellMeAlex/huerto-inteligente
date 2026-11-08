@@ -42,7 +42,7 @@ Lo único que no tenía era tomates.
 
 La naturaleza se convirtió en mi sistema legacy.
 
-El clima era una dependencia externa que no respetaba ningún contrato. Los caracoles eran threat actors. Y el agua tenía una disponibilidad peor que cualquier API pública.
+El clima era una dependencia externa que no respetaba ningún contrato. Y por primera vez, los bugs en producción eran bichos de verdad: pulgones. Y el agua tenía una disponibilidad peor que cualquier API pública.
 
 Así que monté un sistema de riego automático, sensores y temporizadores.
 
