@@ -175,4 +175,32 @@
 .overview-overlay{position:fixed;z-index:100;inset:0;background:#0b0c0f;padding:2rem;overflow:auto}.overview-overlay>header{display:flex;justify-content:space-between;align-items:center;max-width:1500px;margin:0 auto 2rem}.overview-overlay h2{font:600 2.2rem 'Fraunces';margin:.4rem 0}.overview-overlay>header button{border:0;background:transparent;color:#fff;font-size:2.5rem;cursor:pointer}.slide-grid{max-width:1500px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}.slide-grid>button{border:1px solid #2d3036;background:#111318;color:#eee;text-align:left;padding:.65rem;cursor:pointer}.slide-grid>button.active{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 35%,transparent)}.slide-grid>button>span{font:500 .65rem 'DM Mono';color:var(--accent)}.slide-grid>button>strong{display:block;font-size:.78rem;margin:.65rem .15rem .1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mini-slide{position:relative;container-type:inline-size;aspect-ratio:16/9;background:var(--bg);color:var(--ink);overflow:hidden;margin-top:.5rem}.mini-slide .slide-content{position:absolute;inset:0;padding:5.5cqw 7.2cqw 4.6cqw}
 
 @media(max-width:900px){.talks-index>header{display:block}.talks-index>header>p{max-width:none;width:auto;margin-top:2rem}.talk-catalogue{grid-template-columns:1fr}.talk-card{min-height:430px}.speaker-grid{grid-template-columns:1fr;overflow:auto}.speaker-side{display:grid;grid-template-columns:1fr 1fr}.notes-panel{grid-column:auto}.slide-grid{grid-template-columns:repeat(2,1fr)}}
+/* Projector pass: larger type and protected contrast for the garden talk. */
+.presentation.theme-garden .slide-eyebrow{font-size:1.12cqw;font-weight:700;letter-spacing:.14em}
+.presentation.theme-garden .lead{font-size:1.85cqw;line-height:1.35;font-weight:700}
+.presentation.theme-garden .slide-meta{font-size:.88cqw;font-weight:700;color:#d5dfc8;text-shadow:0 1px 3px rgba(0,0,0,.85)}
+.presentation.theme-garden .slide-content h1,.presentation.theme-garden .slide-content h2{text-wrap:balance}
+.presentation.theme-garden .garden-scene .story-scene-shade{background:linear-gradient(90deg,#ffedca 0%,#ffedca 44%,rgba(255,237,202,.94) 52%,rgba(255,237,202,.46) 64%,transparent 76%)}
+.presentation.theme-garden .garden-scene.is-climax .story-scene-shade{background:linear-gradient(90deg,#ffedca 0%,#ffedca 46%,rgba(255,237,202,.94) 54%,rgba(255,237,202,.46) 65%,transparent 76%)}
+.presentation.theme-garden .garden-cover-copy h1{font-size:5cqw;line-height:.96;color:#173322}
+.presentation.theme-garden .garden-scene .lead{color:#344a38;max-width:40cqw}
+.presentation.theme-garden .garden-compact-copy h2{font-size:4cqw;line-height:.98;color:#173322}
+.presentation.theme-garden .scene-story-list.garden-list>div span{background:#fff3d8;color:#173322;border-width:.2cqw;box-shadow:.28cqw .28cqw 0 #789e4b;font-size:1.2cqw;padding:.68cqw .95cqw}
+.presentation.theme-garden .garden-diagnosis span{background:#fff3d8;border-width:.2cqw;padding:.76cqw 1.05cqw;font-size:1.2cqw;box-shadow:.27cqw .27cqw 0 #d7a449}
+.presentation.theme-garden .scene-footnote{font-size:1.08cqw;font-weight:700;color:#40503c}
+.presentation.theme-garden .garden-climax-copy .big-quote p{font-size:3.45cqw;line-height:1.06;color:#173322}
+.presentation.theme-garden .garden-climax-copy>p{font-size:1.55cqw;color:#7b311f}
+.presentation.theme-garden .headline-wall span{padding:1.15cqw 1.55cqw;font-size:1.75cqw;box-shadow:0 .35cqw .9cqw rgba(0,0,0,.28)}
+.presentation.theme-garden .question-shift small{font-size:1cqw;font-weight:700}
+.presentation.theme-garden .question-shift p{font-size:2.55cqw;color:#d3ddc8}
+.presentation.theme-garden .tomato-row span{font-size:4.8cqw}
+.presentation.theme-garden .tomato-row p{font-size:2cqw;line-height:1.2;font-weight:700;max-width:34cqw}
+.presentation.theme-garden .learning-path span{width:2.8cqw;height:2.8cqw;font-size:1.05cqw}
+.presentation.theme-garden .learning-path strong{font-size:1.48cqw}
+.presentation.theme-garden .learning-path b{font-size:1.9cqw}
+.presentation.theme-garden .giant-follow{font-size:4.15cqw;font-weight:700}
+.presentation.theme-garden .numbered-item>span{font-size:1.15cqw;font-weight:700}
+.presentation.theme-garden .numbered-item strong{font-size:1.82cqw;font-weight:700}
+.presentation.theme-garden .story-stage-label{font-size:.78cqw;padding:.55cqw .75cqw}
+
 @media(prefers-reduced-motion:reduce){.reveal{transition:none}.presentation-controls{transition:none}}
