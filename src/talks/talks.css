@@ -176,31 +176,38 @@
 
 @media(max-width:900px){.talks-index>header{display:block}.talks-index>header>p{max-width:none;width:auto;margin-top:2rem}.talk-catalogue{grid-template-columns:1fr}.talk-card{min-height:430px}.speaker-grid{grid-template-columns:1fr;overflow:auto}.speaker-side{display:grid;grid-template-columns:1fr 1fr}.notes-panel{grid-column:auto}.slide-grid{grid-template-columns:repeat(2,1fr)}}
 /* Projector pass: larger type and protected contrast for the garden talk. */
-.presentation.theme-garden .slide-eyebrow{font-size:1.12cqw;font-weight:700;letter-spacing:.14em}
-.presentation.theme-garden .lead{font-size:1.85cqw;line-height:1.35;font-weight:700}
-.presentation.theme-garden .slide-meta{font-size:.88cqw;font-weight:700;color:#d5dfc8;text-shadow:0 1px 3px rgba(0,0,0,.85)}
+.presentation.theme-garden .slide-eyebrow{font-size:1.3cqw;font-weight:700;letter-spacing:.12em}
+.presentation.theme-garden .lead{font-size:2.1cqw;line-height:1.3;font-weight:700}
+.presentation.theme-garden .slide-meta{font-size:1cqw;font-weight:700;color:#eef4e7;text-shadow:0 2px 5px rgba(0,0,0,.95)}
 .presentation.theme-garden .slide-content h1,.presentation.theme-garden .slide-content h2{text-wrap:balance}
-.presentation.theme-garden .garden-scene .story-scene-shade{background:linear-gradient(90deg,#ffedca 0%,#ffedca 44%,rgba(255,237,202,.94) 52%,rgba(255,237,202,.46) 64%,transparent 76%)}
-.presentation.theme-garden .garden-scene.is-climax .story-scene-shade{background:linear-gradient(90deg,#ffedca 0%,#ffedca 46%,rgba(255,237,202,.94) 54%,rgba(255,237,202,.46) 65%,transparent 76%)}
-.presentation.theme-garden .garden-cover-copy h1{font-size:5cqw;line-height:.96;color:#173322}
-.presentation.theme-garden .garden-scene .lead{color:#344a38;max-width:40cqw}
-.presentation.theme-garden .garden-compact-copy h2{font-size:4cqw;line-height:.98;color:#173322}
-.presentation.theme-garden .scene-story-list.garden-list>div span{background:#fff3d8;color:#173322;border-width:.2cqw;box-shadow:.28cqw .28cqw 0 #789e4b;font-size:1.2cqw;padding:.68cqw .95cqw}
-.presentation.theme-garden .garden-diagnosis span{background:#fff3d8;border-width:.2cqw;padding:.76cqw 1.05cqw;font-size:1.2cqw;box-shadow:.27cqw .27cqw 0 #d7a449}
-.presentation.theme-garden .scene-footnote{font-size:1.08cqw;font-weight:700;color:#40503c}
-.presentation.theme-garden .garden-climax-copy .big-quote p{font-size:3.45cqw;line-height:1.06;color:#173322}
-.presentation.theme-garden .garden-climax-copy>p{font-size:1.55cqw;color:#7b311f}
-.presentation.theme-garden .headline-wall span{padding:1.15cqw 1.55cqw;font-size:1.75cqw;box-shadow:0 .35cqw .9cqw rgba(0,0,0,.28)}
-.presentation.theme-garden .question-shift small{font-size:1cqw;font-weight:700}
-.presentation.theme-garden .question-shift p{font-size:2.55cqw;color:#d3ddc8}
-.presentation.theme-garden .tomato-row span{font-size:4.8cqw}
-.presentation.theme-garden .tomato-row p{font-size:2cqw;line-height:1.2;font-weight:700;max-width:34cqw}
-.presentation.theme-garden .learning-path span{width:2.8cqw;height:2.8cqw;font-size:1.05cqw}
-.presentation.theme-garden .learning-path strong{font-size:1.48cqw}
-.presentation.theme-garden .learning-path b{font-size:1.9cqw}
-.presentation.theme-garden .giant-follow{font-size:4.15cqw;font-weight:700}
-.presentation.theme-garden .numbered-item>span{font-size:1.15cqw;font-weight:700}
-.presentation.theme-garden .numbered-item strong{font-size:1.82cqw;font-weight:700}
-.presentation.theme-garden .story-stage-label{font-size:.78cqw;padding:.55cqw .75cqw}
+.presentation.theme-garden .garden-scene .story-scene-shade{background:linear-gradient(90deg,#ffedca 0%,#ffedca 50%,rgba(255,237,202,.97) 57%,rgba(255,237,202,.6) 68%,transparent 80%)}
+.presentation.theme-garden .garden-scene.is-climax .story-scene-shade{background:linear-gradient(90deg,#ffedca 0%,#ffedca 52%,rgba(255,237,202,.97) 59%,rgba(255,237,202,.6) 69%,transparent 80%)}
+.presentation.theme-garden .garden-cover-copy h1{font-size:5.35cqw;line-height:.95;color:#102a1b}
+.presentation.theme-garden .garden-scene .lead{color:#263d2d;max-width:42cqw}
+.presentation.theme-garden .garden-compact-copy{width:51cqw}
+.presentation.theme-garden .garden-compact-copy h2{font-size:4.35cqw;line-height:.97;color:#102a1b}
+.presentation.theme-garden .scene-story-list.garden-list{gap:.58cqw}
+.presentation.theme-garden .scene-story-list.garden-list>div span{background:#fff8e8;color:#102a1b;border-width:.22cqw;box-shadow:.3cqw .3cqw 0 #668b3b;font-size:1.38cqw;padding:.78cqw 1.08cqw}
+.presentation.theme-garden .scene-story-list.garden-list b{font-size:.8cqw}
+.presentation.theme-garden .garden-diagnosis{gap:.72cqw}
+.presentation.theme-garden .garden-diagnosis span{background:#fff8e8;border-width:.22cqw;padding:.86cqw 1.16cqw;font-size:1.38cqw;box-shadow:.3cqw .3cqw 0 #c5912f}
+.presentation.theme-garden .garden-diagnosis b{font-size:.8cqw}
+.presentation.theme-garden .scene-footnote{font-size:1.25cqw;font-weight:700;color:#30452f}
+.presentation.theme-garden .garden-climax-copy{width:55cqw}
+.presentation.theme-garden .garden-climax-copy .big-quote p{font-size:3.7cqw;line-height:1.05;color:#102a1b}
+.presentation.theme-garden .garden-climax-copy>p{font-size:1.8cqw;color:#6f2819}
+.presentation.theme-garden .headline-wall{gap:1.25cqw}
+.presentation.theme-garden .headline-wall span{padding:1.3cqw 1.75cqw;font-size:2cqw;box-shadow:0 .4cqw 1cqw rgba(0,0,0,.32)}
+.presentation.theme-garden .question-shift small{font-size:1.15cqw;font-weight:700}
+.presentation.theme-garden .question-shift p{font-size:2.9cqw;color:#e3eadc}
+.presentation.theme-garden .tomato-row span{font-size:5.2cqw}
+.presentation.theme-garden .tomato-row p{font-size:2.3cqw;line-height:1.18;font-weight:700;max-width:37cqw}
+.presentation.theme-garden .learning-path span{width:3.1cqw;height:3.1cqw;font-size:1.18cqw}
+.presentation.theme-garden .learning-path strong{font-size:1.72cqw;font-weight:700}
+.presentation.theme-garden .learning-path b{font-size:2.1cqw}
+.presentation.theme-garden .giant-follow{font-size:4.55cqw;font-weight:700}
+.presentation.theme-garden .numbered-item>span{font-size:1.3cqw;font-weight:700}
+.presentation.theme-garden .numbered-item strong{font-size:2.08cqw;font-weight:700}
+.presentation.theme-garden .story-stage-label{font-size:.9cqw;padding:.62cqw .85cqw}
 
 @media(prefers-reduced-motion:reduce){.reveal{transition:none}.presentation-controls{transition:none}}
