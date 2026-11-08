@@ -39,7 +39,7 @@ function Presentation({ talk }: { talk: NonNullable<ReturnType<typeof getTalk>> 
     if (!version) return
     for (const stage of [1, 2, 3, 4]) {
       const image = new Image()
-      image.src = `/talk-assets/${talk.id}/stage-${stage}.png?v=${version}`
+      image.src = `${import.meta.env.BASE_URL}talk-assets/${talk.id}/stage-${stage}.png?v=${version}`
     }
   }, [talk.id])
 

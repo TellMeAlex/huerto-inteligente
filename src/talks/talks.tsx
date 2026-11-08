@@ -45,9 +45,10 @@ function NumberedList({ items, step }: { items: Array<{ title: string; text?: st
 }
 
 function FireScene({ stage, children, climax = false }: { stage: 1 | 2 | 3 | 4; children: ReactNode; climax?: boolean }) {
+  const assetPath = `${import.meta.env.BASE_URL}talk-assets/this-is-fine/stage-${stage}.png?v=anatomy-fix`
   return (
     <div className={`fire-scene stage-${stage} ${climax ? 'is-climax' : ''}`}>
-      <img src={`/talk-assets/this-is-fine/stage-${stage}.png?v=anatomy-fix`} alt="" aria-hidden="true" />
+      <img src={assetPath} alt="" aria-hidden="true" />
       <div className="fire-scene-shade" />
       <div className="fire-scene-copy">{children}</div>
       <span className="fire-stage-label">FUEGO · 0{stage}</span>
@@ -58,9 +59,10 @@ function FireScene({ stage, children, climax = false }: { stage: 1 | 2 | 3 | 4; 
 function StoryScene({ kind, stage, children, climax = false }: { kind: 'electric' | 'garden'; stage: 1 | 2 | 3 | 4; children: ReactNode; climax?: boolean }) {
   const talkId = kind === 'electric' ? 'ovejas-electricas' : 'huerto-inteligente'
   const assetVersion = kind === 'garden' ? 'garden-arm-fix-v2' : 'visual-sequence-v1'
+  const assetPath = `${import.meta.env.BASE_URL}talk-assets/${talkId}/stage-${stage}.png?v=${assetVersion}`
   return (
     <div className={`story-scene ${kind}-scene stage-${stage} ${climax ? 'is-climax' : ''}`}>
-      <img src={`/talk-assets/${talkId}/stage-${stage}.png?v=${assetVersion}`} alt="" aria-hidden="true" />
+      <img src={assetPath} alt="" aria-hidden="true" />
       <div className="story-scene-shade" />
       <div className="story-scene-fx" aria-hidden="true" />
       <div className="story-scene-copy">{children}</div>
