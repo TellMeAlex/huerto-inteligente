@@ -1,0 +1,16 @@
+src/talks/PresentationPage.tsx
+  h_72f012d83ce049 42
+src/talks/talks.tsx
+  h_72f012d83ce049 48,51,62,65
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "522437be11f3e76d7fcc35120fca5cb1d914c305",
+  "prompts": {},
+  "humans": {
+    "h_72f012d83ce049": {
+      "author": "Alejandro de la Fuente de la Rosa <alejandrodlfdlr@ext.inditex.com>"
+    }
+  }
+}
