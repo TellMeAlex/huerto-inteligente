@@ -1,0 +1,23 @@
+docs/guiones-huerto-inteligente.md
+  s_aaccf5c23de866::t_602b4551fd9ae6 45
+src/talks/talks.css
+  s_aaccf5c23de866::t_bc9d64917634a1 220,226
+src/talks/talks.tsx
+  s_aaccf5c23de866::t_ac14bddee1181c 196-197
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "6287c5fd23756b52d41f640593bb509e08d08085",
+  "prompts": {},
+  "sessions": {
+    "s_aaccf5c23de866": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3488da3e-5c40-41d3-8a47-d213cde73b4f",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Alejandro de la Fuente de la Rosa <alejandrodlfdlr@ext.inditex.com>"
+    }
+  }
+}
