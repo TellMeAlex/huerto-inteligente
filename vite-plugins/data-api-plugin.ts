@@ -24,8 +24,6 @@ export interface DataApiPluginOptions {
  */
 export function dataApiPlugin(options: DataApiPluginOptions): Plugin {
   const ctx = createContext(options.repoRoot)
-  const talkClients = new Map<string, Set<ServerResponse>>()
-  const talkStates = new Map<string, { slide: number; step: number }>()
 
   return {
     name: 'roadmad-data-api',
@@ -46,42 +44,6 @@ export function dataApiPlugin(options: DataApiPluginOptions): Plugin {
     const url = (req.url ?? '/').split('?')[0]
     const method = req.method ?? 'GET'
     const segments = url.split('/').filter(Boolean) // ["sessions", "01", "session"]
-
-    // Canal local para sincronizar proyector y vista de ponente, incluso entre
-    // navegadores distintos conectados al mismo servidor de desarrollo.
-    if (segments[0] === 'talk-sync' && segments[1]) {
-      const talkId = segments[1]
-      if (method === 'GET' && segments[2] === 'events') {
-        res.writeHead(200, {
-          'Content-Type': 'text/event-stream',
-          'Cache-Control': 'no-cache, no-transform',
-          Connection: 'keep-alive',
-          'X-Accel-Buffering': 'no',
-        })
-        res.write(': connected\n\n')
-        const clients = talkClients.get(talkId) ?? new Set<ServerResponse>()
-        clients.add(res)
-        talkClients.set(talkId, clients)
-        const current = talkStates.get(talkId)
-        if (current) res.write(`data: ${JSON.stringify(current)}\n\n`)
-        await new Promise<void>((resolve) => req.on('close', () => {
-          clients.delete(res)
-          resolve()
-        }))
-        return
-      }
-
-      if (method === 'POST' && segments.length === 2) {
-        const state = await readJsonBody<{ slide: number; step: number }>(req)
-        if (!Number.isFinite(state.slide) || !Number.isFinite(state.step)) {
-          throw new HttpError(400, 'Estado de presentación no válido')
-        }
-        talkStates.set(talkId, state)
-        const message = `data: ${JSON.stringify(state)}\n\n`
-        for (const client of talkClients.get(talkId) ?? []) client.write(message)
-        return sendJson(res, 200, { ok: true })
-      }
-    }
 
     // GET /api/roadmap
     if (method === 'GET' && segments[0] === 'roadmap' && segments.length === 1) {

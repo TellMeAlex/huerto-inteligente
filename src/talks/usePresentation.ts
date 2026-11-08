@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { createRoomCode, normalizeRoomCode, publishState, subscribeToRoom, type RelayStatus } from './relay.ts'
 import { presentationChannel, presentationStorageKey, readPresentationState, writePresentationState } from './sync.ts'
 import type { PresentationState, Talk } from './types.ts'
 
@@ -8,58 +9,85 @@ function clampState(talk: Talk, state: PresentationState): PresentationState {
   return { slide, step: Math.min(Math.max(0, state.step), fragments) }
 }
 
+function roomStorageKey(talkId: string) {
+  return `roadmad-talk:${talkId}:room`
+}
+
+function storeRoom(talkId: string, room: string) {
+  try { localStorage.setItem(roomStorageKey(talkId), room) } catch { /* private mode: room lives in memory */ }
+}
+
+/** A `?room=` link (from the QR) wins; otherwise reuse the stored room or create one. */
+function resolveRoom(talkId: string): string {
+  const fromUrl = normalizeRoomCode(new URLSearchParams(window.location.search).get('room'))
+  if (fromUrl) { storeRoom(talkId, fromUrl); return fromUrl }
+  try {
+    const stored = normalizeRoomCode(localStorage.getItem(roomStorageKey(talkId)))
+    if (stored) return stored
+  } catch { /* fall through */ }
+  const fresh = createRoomCode()
+  storeRoom(talkId, fresh)
+  return fresh
+}
+
 export function usePresentation(talk: Talk) {
   const [state, setLocalState] = useState<PresentationState>(() => clampState(talk, readPresentationState(talk.id)))
+  const [room, setRoom] = useState(() => resolveRoom(talk.id))
+  const [relayStatus, setRelayStatus] = useState<RelayStatus>('connecting')
   const channelRef = useRef<BroadcastChannel | null>(null)
+  const clientId = useRef(createRoomCode())
+  const lastSentSeq = useRef(0)
 
-  const update = useCallback((next: PresentationState) => {
+  const applyState = useCallback((next: PresentationState) => {
     const safe = clampState(talk, next)
     setLocalState(safe)
     writePresentationState(talk.id, safe)
+  }, [talk])
+
+  const update = useCallback((next: PresentationState) => {
+    const safe = clampState(talk, next)
+    applyState(safe)
     channelRef.current?.postMessage(safe)
-    void fetch(`/api/talk-sync/${talk.id}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(safe),
-    }).catch(() => undefined)
-  }, [talk])
+    const seq = ++lastSentSeq.current
+    publishState(talk.id, room, { ...safe, from: clientId.current, seq })
+      .then(() => setRelayStatus('online'))
+      .catch(() => setRelayStatus('offline'))
+  }, [talk, room, applyState])
 
+  // Same browser (projector + speaker window on the laptop): instant, works offline.
   useEffect(() => {
-    if ('BroadcastChannel' in window) {
-      const channel = new BroadcastChannel(presentationChannel(talk.id))
-      channelRef.current = channel
-      channel.onmessage = (event: MessageEvent<PresentationState>) => {
-        setLocalState(clampState(talk, event.data))
-      }
-      return () => {
-        channel.close()
-        channelRef.current = null
-      }
+    if (!('BroadcastChannel' in window)) return
+    const channel = new BroadcastChannel(presentationChannel(talk.id))
+    channelRef.current = channel
+    channel.onmessage = (event: MessageEvent<PresentationState>) => applyState(event.data)
+    return () => {
+      channel.close()
+      channelRef.current = null
     }
-  }, [talk])
+  }, [talk, applyState])
 
-  useEffect(() => {
-    const events = new EventSource(`/api/talk-sync/${talk.id}/events`)
-    events.onmessage = (event) => {
-      try {
-        const safe = clampState(talk, JSON.parse(event.data) as PresentationState)
-        setLocalState(safe)
-        writePresentationState(talk.id, safe)
-      } catch {
-        // Ignoramos un mensaje incompleto y conservamos el último estado válido.
-      }
-    }
-    return () => events.close()
-  }, [talk])
+  // Other devices (phone): ntfy relay in server order.
+  useEffect(() => subscribeToRoom(talk.id, room, (message) => {
+    const isOwnStaleEcho = message.from === clientId.current && message.seq !== lastSentSeq.current
+    if (!isOwnStaleEcho) applyState(message)
+  }, setRelayStatus), [talk, room, applyState])
 
   useEffect(() => {
     const onStorage = (event: StorageEvent) => {
-      if (event.key === presentationStorageKey(talk.id)) {
-        setLocalState(clampState(talk, readPresentationState(talk.id)))
+      if (event.key === presentationStorageKey(talk.id)) setLocalState(clampState(talk, readPresentationState(talk.id)))
+      if (event.key === roomStorageKey(talk.id)) {
+        const next = normalizeRoomCode(event.newValue)
+        if (next) setRoom(next)
       }
     }
     window.addEventListener('storage', onStorage)
     return () => window.removeEventListener('storage', onStorage)
+  }, [talk])
+
+  const newRoom = useCallback(() => {
+    const fresh = createRoomCode()
+    storeRoom(talk.id, fresh)
+    setRoom(fresh)
   }, [talk])
 
   const next = useCallback(() => {
@@ -79,5 +107,5 @@ export function usePresentation(talk: Talk) {
 
   const goTo = useCallback((slide: number) => update({ slide, step: 0 }), [update])
 
-  return { state, next, previous, goTo, update }
+  return { state, next, previous, goTo, update, room, relayStatus, newRoom }
 }

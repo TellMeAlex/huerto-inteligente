@@ -293,3 +293,37 @@
 .theme-garden .garden-climax-copy>p em{font-style:normal;color:#c7512f}
 
 @media(prefers-reduced-motion:reduce){.reveal{transition:none}.presentation-controls{transition:none}.story-scene>img,.story-scene-hotspots,.hotspot,.hotspot>b,.hotspot>i::after,.growth-node>span::after{animation:none!important}}
+
+/* Remote control pairing (phone as speaker remote via ntfy.sh relay) */
+.relay-status{display:inline-flex;align-items:center;gap:.5rem;font:500 .7rem 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;color:#9a9da3}
+.relay-status i{width:8px;height:8px;border-radius:50%;background:#e0a33a;box-shadow:0 0 10px #e0a33a}
+.relay-status.is-online i{background:#7bea82;box-shadow:0 0 10px #7bea82}
+.relay-status.is-offline i{background:#ff6b5a;box-shadow:0 0 10px #ff6b5a}
+.relay-status.is-offline{color:#ff9d90}
+.pair-button{margin-left:.8rem;border:1px solid #363941;background:#17191e;color:#eee;padding:.45rem .7rem;font:600 .78rem 'DM Sans',sans-serif;cursor:pointer}
+.pairing-overlay{position:fixed;z-index:120;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(14px);display:grid;place-items:center;padding:1.5rem;color:#f7f4ee;overflow:auto}
+.pairing-panel{position:relative;width:min(900px,100%);background:#121318;border:1px solid #32353b;padding:2.5rem;display:grid;grid-template-columns:minmax(0,320px) 1fr;gap:2.5rem;align-items:center}
+.pairing-qr{aspect-ratio:1;background:#fff8e8;display:grid;place-items:center;color:#102a1b;font:500 .8rem 'DM Mono',monospace}
+.pairing-qr img{width:100%;height:100%;display:block;image-rendering:pixelated}
+.pairing-copy h2{font:600 2rem/1.1 'Fraunces',serif;margin:.7rem 0 1.2rem}
+.pairing-code{font:500 1.9rem 'DM Mono',monospace;letter-spacing:.08em;color:var(--accent);margin:0 0 .8rem}
+.pairing-url{font:400 .72rem/1.4 'DM Mono',monospace;color:#7d8087;word-break:break-all;margin:1rem 0 0}
+.pairing-note{color:#8b8e94;font-size:.85rem;line-height:1.5;margin:.8rem 0 1.2rem}
+.pairing-warning{color:#ffc857;font-size:.9rem;line-height:1.45;border-left:3px solid #ffc857;padding-left:.8rem;margin:1rem 0 0}
+.pairing-new{border:1px solid #363941;background:#17191e;color:#eee;padding:.65rem .9rem;cursor:pointer;font-weight:600}
+@media(max-width:700px){
+  .pairing-panel{grid-template-columns:1fr;padding:1.5rem;gap:1.2rem}
+  .pairing-qr{max-width:260px;width:100%;margin:auto}
+  .speaker-header{height:auto;min-height:56px;padding:.6rem 1rem;flex-wrap:wrap;gap:.4rem}
+  .speaker-header>div:first-child span{display:none}
+  .speaker-status strong{margin-left:.4rem}
+  .pair-button span,.speaker-controls .overview-button span{display:none}
+  .speaker-grid{padding:.8rem;gap:.8rem}
+  .speaker-side{grid-template-columns:1fr}
+  .next-panel{display:none}
+  .speaker-controls{height:auto;padding:.7rem;gap:.5rem;position:sticky;bottom:0;background:#090a0d}
+  .speaker-controls button{height:64px;font-size:1.05rem}
+  .speaker-controls button.primary{flex:1;min-width:0}
+  .speaker-progress{display:none}
+  .notes-panel p{font-size:1.05rem}
+}

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { getTalk } from './talks.tsx'
 import { usePresentation } from './usePresentation.ts'
+import { RelayStatusBadge, RemotePairing } from './RemotePairing.tsx'
 import './talks.css'
 
 export function SpeakerPage() {
@@ -12,7 +13,9 @@ export function SpeakerPage() {
 }
 
 function Speaker({ talk }: { talk: NonNullable<ReturnType<typeof getTalk>> }) {
-  const { state, next, previous, goTo } = usePresentation(talk)
+  const { state, next, previous, goTo, room, relayStatus, newRoom } = usePresentation(talk)
+  const [pairingOpen, setPairingOpen] = useState(false)
+  useWakeLock()
   const [startedAt, setStartedAt] = useState<number | null>(null)
   const [elapsed, setElapsed] = useState(0)
   const [overview, setOverview] = useState(false)
@@ -44,7 +47,7 @@ function Speaker({ talk }: { talk: NonNullable<ReturnType<typeof getTalk>> }) {
     <main className={`speaker-view theme-${talk.theme}`}>
       <header className="speaker-header">
         <div><Link to="/talks">TECH TALKS</Link><span>{talk.shortTitle}</span></div>
-        <div className="speaker-status"><span className="live-dot"/> sincronizado <strong>{clock}</strong></div>
+        <div className="speaker-status"><RelayStatusBadge status={relayStatus} /><button className="pair-button" onClick={() => setPairingOpen(true)}>📱 <span>Conectar móvil</span></button><strong>{clock}</strong></div>
       </header>
       <section className="speaker-grid">
         <div className="speaker-main">
@@ -63,9 +66,27 @@ function Speaker({ talk }: { talk: NonNullable<ReturnType<typeof getTalk>> }) {
         <button className="overview-button" onClick={() => setOverview(true)}>▦ <span>Vista general</span></button>
         <button className="primary" onClick={next}><span>Siguiente</span> →</button>
       </footer>
+      {pairingOpen && <RemotePairing talkId={talk.id} room={room} status={relayStatus} onNewRoom={newRoom} onClose={() => setPairingOpen(false)} />}
       {overview && <div className="overview-overlay"><header><div><span className="index-kicker">Navegador</span><h2>{talk.shortTitle}</h2></div><button onClick={() => setOverview(false)}>×</button></header><div className="slide-grid">{talk.slides.map((slide,index)=><button className={index===state.slide?'active':''} onClick={()=>{goTo(index);setOverview(false)}} key={slide.id}><span>{String(index+1).padStart(2,'0')}</span><div className="mini-slide"><div className="slide-content">{slide.content(0)}</div></div><strong>{slide.title}</strong></button>)}</div></div>}
     </main>
   )
+}
+
+/** Keeps the phone screen on while it is used as a remote. */
+function useWakeLock() {
+  useEffect(() => {
+    let lock: WakeLockSentinel | null = null
+    const request = () => {
+      if (document.visibilityState !== 'visible' || !('wakeLock' in navigator)) return
+      navigator.wakeLock.request('screen').then((sentinel) => { lock = sentinel }).catch(() => undefined)
+    }
+    request()
+    document.addEventListener('visibilitychange', request)
+    return () => {
+      document.removeEventListener('visibilitychange', request)
+      void lock?.release()
+    }
+  }, [])
 }
 
 function useClock() {

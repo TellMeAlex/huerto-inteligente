@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { getTalk } from './talks.tsx'
 import { usePresentation } from './usePresentation.ts'
+import { RemotePairing } from './RemotePairing.tsx'
 import './talks.css'
 
 export function PresentationPage() {
@@ -12,8 +13,10 @@ export function PresentationPage() {
 }
 
 function Presentation({ talk }: { talk: NonNullable<ReturnType<typeof getTalk>> }) {
-  const { state, next, previous } = usePresentation(talk)
+  const { state, next, previous, room, relayStatus, newRoom } = usePresentation(talk)
   const [helpOpen, setHelpOpen] = useState(false)
+  const [pairingOpen, setPairingOpen] = useState(false)
+  const openSpeaker = () => window.open(`${import.meta.env.BASE_URL}talks/${talk.id}/speaker`, `${talk.id}-speaker`, 'popup,width=1400,height=900')
   const [controlsVisible, setControlsVisible] = useState(true)
   const hideTimer = useRef<number | undefined>(undefined)
   const slide = talk.slides[state.slide]
@@ -51,9 +54,10 @@ function Presentation({ talk }: { talk: NonNullable<ReturnType<typeof getTalk>> 
         if (document.fullscreenElement) void document.exitFullscreen()
         else void document.documentElement.requestFullscreen()
       }
-      if (event.key.toLowerCase() === 's') window.open(`/talks/${talk.id}/speaker`, `${talk.id}-speaker`, 'popup,width=1400,height=900')
+      if (event.key.toLowerCase() === 's') openSpeaker()
+      if (event.key.toLowerCase() === 'm') setPairingOpen((value) => !value)
       if (event.key === '?' || event.key.toLowerCase() === 'h') setHelpOpen((value) => !value)
-      if (event.key === 'Escape') setHelpOpen(false)
+      if (event.key === 'Escape') { setHelpOpen(false); setPairingOpen(false) }
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
@@ -74,12 +78,14 @@ function Presentation({ talk }: { talk: NonNullable<ReturnType<typeof getTalk>> 
         <button onClick={previous} aria-label="Anterior">←</button>
         <span>{state.slide + 1} / {talk.slides.length}</span>
         <button onClick={next} aria-label="Siguiente">→</button>
-        <button onClick={() => window.open(`/talks/${talk.id}/speaker`, `${talk.id}-speaker`, 'popup,width=1400,height=900')} title="Abrir vista del ponente">▣</button>
+        <button onClick={openSpeaker} title="Abrir vista del ponente">▣</button>
+        <button onClick={() => setPairingOpen(true)} title="Controlar desde el móvil">📱</button>
         <button onClick={() => setHelpOpen(true)} title="Ayuda">?</button>
       </nav>
       <button className="click-zone left" onClick={previous} aria-label="Diapositiva anterior" />
       <button className="click-zone right" onClick={next} aria-label="Siguiente diapositiva" />
-      {helpOpen && <div className="help-overlay" onClick={() => setHelpOpen(false)}><div onClick={(e) => e.stopPropagation()}><button className="close-help" onClick={() => setHelpOpen(false)}>×</button><EyebrowText>Controles</EyebrowText><h2>Presenta sin mirar el ratón.</h2><dl><dt>→ / espacio</dt><dd>Avanzar slide o animación</dd><dt>←</dt><dd>Retroceder</dd><dt>F</dt><dd>Pantalla completa</dd><dt>S</dt><dd>Abrir vista del ponente</dd><dt>H / ?</dt><dd>Mostrar esta ayuda</dd></dl><p>Las dos ventanas se sincronizan automáticamente si comparten el mismo origen.</p></div></div>}
+      {helpOpen && <div className="help-overlay" onClick={() => setHelpOpen(false)}><div onClick={(e) => e.stopPropagation()}><button className="close-help" onClick={() => setHelpOpen(false)}>×</button><EyebrowText>Controles</EyebrowText><h2>Presenta sin mirar el ratón.</h2><dl><dt>→ / espacio</dt><dd>Avanzar slide o animación</dd><dt>←</dt><dd>Retroceder</dd><dt>F</dt><dd>Pantalla completa</dd><dt>S</dt><dd>Abrir vista del ponente</dd><dt>M</dt><dd>Emparejar el móvil como mando</dd><dt>H / ?</dt><dd>Mostrar esta ayuda</dd></dl><p>Las ventanas del mismo navegador se sincronizan al instante; el móvil, a través del relé ntfy.sh.</p></div></div>}
+      {pairingOpen && <RemotePairing talkId={talk.id} room={room} status={relayStatus} projected onNewRoom={newRoom} onClose={() => setPairingOpen(false)} />}
     </main>
   )
 }

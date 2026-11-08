@@ -22,11 +22,22 @@ Las tres presentaciones web están disponibles en `http://localhost:5173/talks`.
 - `/talks/:id/speaker`: vista del ponente con diapositiva siguiente, notas, reloj,
   cronómetro y navegador de slides.
 - `←`/`→` o espacio: navegación; `F`: pantalla completa; `S`: abre la vista del
-  ponente; `?`: ayuda.
+  ponente; `M`: emparejar el móvil; `?`: ayuda.
 
-Las vistas se sincronizan mediante `BroadcastChannel` y, mientras se ejecutan con
-`npm run dev`, también mediante un canal local del servidor. Esto permite usar dos
-ventanas, dos pantallas o incluso dos navegadores distintos conectados al mismo host.
+### Sincronización y móvil como mando
+
+- **Mismo navegador** (proyector + ventana del ponente en el portátil): `BroadcastChannel`,
+  instantáneo y sin internet.
+- **Otros dispositivos** (el móvil): relé público [ntfy.sh](https://ntfy.sh) por HTTPS/SSE,
+  así que funciona también desde GitHub Pages y con datos móviles. En la vista del ponente,
+  pulsa **📱 Conectar móvil** y escanea el QR: el móvil abre la vista del ponente unida a la
+  misma sala (`?room=`). El código de sala es aleatorio (12 caracteres); «Nueva sala»
+  desconecta a los móviles emparejados.
+- Cada dispositivo publica su estado absoluto con un número de secuencia y todos aplican los
+  mensajes en el orden del servidor, de modo que convergen aunque dos pulsen a la vez.
+- Límites de ntfy.sh por IP: ráfaga de 60 peticiones y después 1 cada 5 s; una charla son
+  unos 45 clics. Sin internet en la sala no hay mando remoto: lleva un presentador Bluetooth
+  como plan B.
 
 Solo local (no hay build de producción). Al guardar desde la UI, los cambios van al disco
 en `../sessions/`; revísalos con `git diff` como cualquier otra edición.
