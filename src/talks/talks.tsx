@@ -276,11 +276,10 @@ const fireSlides: Talk['slides'] = [
   },
 ]
 
-void electricSlides
-void fireSlides
-
 export const talks: Talk[] = [
-  { id:'huerto-inteligente', number:'01', shortTitle:'El huerto inteligente', title:'El agotamiento de vivir en la frontera', subtitle:'Y cómo la IA me ayudó a cultivar un huerto', duration:'30 min', theme:'garden', description:'Una historia sobre salir del ruido de las novedades y usar la IA para adquirir capacidades reales.', slides:gardenSlides },
+  { id:'ovejas-electricas', number:'01', shortTitle:'Ovejas eléctricas', title:'De programador a psicólogo de ovejas eléctricas', subtitle:'Oficio, criterio e IA', duration:'35 min', theme:'electric', description:'Cómo pasamos de escribir instrucciones a negociar intenciones, y por qué los fundamentos importan más que nunca.', slides:electricSlides },
+  { id:'huerto-inteligente', number:'02', shortTitle:'El huerto inteligente', title:'El agotamiento de vivir en la frontera', subtitle:'Y cómo la IA me ayudó a cultivar un huerto', duration:'30 min', theme:'garden', description:'Una historia sobre salir del ruido de las novedades y usar la IA para adquirir capacidades reales.', slides:gardenSlides },
+  { id:'this-is-fine', number:'03', shortTitle:'This is fine', title:'Cuando “This is fine” se convirtió en mi filosofía para la IA', subtitle:'Manual de supervivencia para el caos permanente', duration:'30 min', theme:'fire', description:'Cómo experimentar con una tecnología que cambia cada día sin convertir cada novedad en una emergencia.', slides:fireSlides },
 ]
 
 export function getTalk(id: string | undefined) {

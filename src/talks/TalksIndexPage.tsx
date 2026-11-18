@@ -7,10 +7,10 @@ export function TalksIndexPage() {
     <main className="talks-index">
       <header>
         <div>
-          <span className="index-kicker">TECH TALK · SESIÓN 2026</span>
-          <h1>Una historia sobre vivir<br/>con inteligencia artificial.</h1>
+          <span className="index-kicker">TECH TALKS · COLECCIÓN 2026</span>
+          <h1>Tres historias sobre vivir<br/>con inteligencias artificiales.</h1>
         </div>
-        <p>Una presentación web preparada para escenario, con notas de ponente y control remoto entre ventanas.</p>
+        <p>Presentaciones web preparadas para escenario, con notas de ponente y control remoto entre ventanas.</p>
       </header>
       <section className="talk-catalogue">
         {talks.map((talk) => (
