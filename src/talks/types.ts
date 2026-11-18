@@ -7,6 +7,7 @@ export type Slide = {
   title: string
   section?: string
   notes: string
+  stepNotes?: string[]
   fragments?: number
   content: (step: number) => ReactNode
 }

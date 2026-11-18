@@ -89,51 +89,61 @@ function StoryScene({ kind, stage, children, climax = false, hotspots }: { kind:
 const electricSlides: Talk['slides'] = [
   {
     id: 'portada', title: 'De programador a psicólogo de ovejas eléctricas',
+    stepNotes: ['Abrir con la oveja aún sencilla. Contar la elección de informática y dejar una pausa antes del giro: ahora hablamos con las máquinas como con personas.'],
     notes: 'La oveja aparece como un esquema eléctrico todavía sencillo. Abrir con calma. Contar que elegiste informática porque hablar con ordenadores parecía más sencillo que hablar con personas. Pausa antes del remate: la industria respondió creando ordenadores con los que hay que hablar como si fueran personas.',
     content: () => <StoryScene kind="electric" stage={1}><div className="electric-cover-copy"><Eyebrow>01 · Oficio, criterio e IA</Eyebrow><h1>De programador a<br/><em>psicólogo</em> de ovejas eléctricas</h1><p className="lead">Cómo pasé de escribir instrucciones a negociar intenciones.</p></div></StoryScene>,
   },
   {
     id: 'antes', title: 'La época feliz del determinismo', fragments: 2,
+    stepNotes: ['Plantear el contraste: antes un fallo era reproducible.', 'Mostrar el error de la línea 42. Rematar: al menos sabíamos dónde mirar.', 'Mostrar la respuesta confiada de la IA. Pausa antes de decir que quizá se lo ha inventado.'],
     notes: 'Contrastar el error clásico con la experiencia actual. No idealizar el pasado: la gracia está en que el bug era reproducible. Dejar que cada columna aparezca por separado.',
     content: (step) => <div><Eyebrow>Antes / ahora</Eyebrow><h2>Antes, el ordenador<br/>fallaba <em>siempre igual</em>.</h2><div className="comparison"><Reveal at={1} step={step}><article><small>ANTES</small><strong>Error: línea 42</strong><p>Frío. Preciso. Reproducible.</p></article></Reveal><Reveal at={2} step={step}><article className="accent-card"><small>AHORA</small><strong>«¡Por supuesto!»</strong><p>Y tres párrafos explicando algo que no existe.</p></article></Reveal></div></div>,
   },
   {
     id: 'consulta', title: 'La consulta', fragments: 3,
+    stepNotes: ['Presentar la consulta. Cada clic es un turno de conversación.', 'Leer la petición con naturalidad: «una solución sencilla».', 'Cambiar a voz de IA entusiasta para la arquitectura de 14 servicios.', 'Leer la réplica como si fuera terapia de pareja; dejar espacio a la risa.'],
     notes: 'Interpretar los tres papeles con voces ligeramente distintas. El chiste es reconocernos en comportamientos que antes reservábamos a conversaciones humanas.',
     content: (step) => <div><Eyebrow>Nuevas competencias</Eyebrow><h2>Bienvenidos a la consulta.</h2><div className="chat-stack"><Reveal at={1} step={step}><div className="chat user">Hazme una solución sencilla.</div></Reveal><Reveal at={2} step={step}><div className="chat ai">He diseñado una arquitectura distribuida con 14 servicios.</div></Reveal><Reveal at={3} step={step}><div className="chat user">Eso está muy bien. ¿Qué parte de «sencilla» te ha hecho sentir insegura?</div></Reveal></div></div>,
   },
   {
     id: 'diagnosticos', title: 'Diagnósticos frecuentes', fragments: 4,
+    stepNotes: ['Entra la oveja más compleja. Presentar la clasificación clínica absurda.', 'Paquete imaginario: contar un ejemplo real de biblioteca inventada.', 'Amnesia selectiva: la IA pierde una restricción importante.', 'Optimismo compilatorio: afirma que funciona antes de probarlo.', 'Horror vacui: rellena huecos con seguridad. Cerrar con la necesidad de verificar.'],
     notes: 'Segunda aparición: la oveja habla, sus circuitos se multiplican y aparece un contorno fantasma de alucinación. Presentarlo como una clasificación clínica absurda. Añadir una alucinación propia. Estos patrones justifican la verificación.',
     content: (step) => <StoryScene kind="electric" stage={2}><div className="electric-compact-copy"><Eyebrow>Manual diagnóstico</Eyebrow><h2>Patologías de la<br/>oveja eléctrica</h2><div className="scene-story-list">{['Paquete imaginario','Amnesia selectiva','Optimismo compilatorio','Horror vacui'].map((item,index)=><Reveal at={index+1} step={step} key={item}><span><b>0{index+1}</b>{item}</span></Reveal>)}</div></div></StoryScene>,
   },
   {
     id: 'espejo', title: 'El espejo del conocimiento', fragments: 2,
+    stepNotes: ['Presentar la misma respuesta a dos personas. La imagen muestra la revisión humana.', 'Con criterio: explicar qué conocimiento permite detectar la falta de contexto.', 'Sin criterio: la seguridad de la respuesta convence. Dejar una pausa para el giro.'],
     notes: 'Tercera aparición: una mano humana inspecciona el corazón del sistema. Este es el giro de la charla. Con conocimiento detectamos el error; sin él, la misma seguridad nos convence. La IA no corrige nuestra ignorancia automáticamente.',
     content: (step) => <StoryScene kind="electric" stage={3}><div className="electric-compact-copy"><Eyebrow>El experimento incómodo</Eyebrow><h2>La misma respuesta.<br/>Dos lectores distintos.</h2><div className="scene-contrast"><Reveal at={1} step={step}><span><b>CON CRITERIO</b>«Aquí falta contexto.»</span></Reveal><Reveal at={2} step={step}><span><b>SIN CRITERIO</b>«Qué bien explicado.»</span></Reveal></div></div></StoryScene>,
   },
   {
     id: 'fundamentos', title: 'Los fundamentos no caducan', fragments: 6,
+    stepNotes: ['Tesis: escribiremos menos sintaxis, pero necesitaremos entender más decisiones.', 'Arquitectura: qué piezas componen el sistema.', 'Modelado: qué problema estamos representando.', 'Seguridad: qué datos y permisos están en juego.', 'Concurrencia: qué ocurre cuando pasan varias cosas a la vez.', 'Testing: cómo sabemos que funciona.', 'Dominio: qué necesita realmente quien usa el producto.'],
     notes: 'Hacer aparecer conceptos de uno en uno. Adaptar la lista al perfil del público. Mensaje: quizá escribimos menos sintaxis, pero tomamos más decisiones y necesitamos reconocer las consecuencias.',
     content: (step) => <div className="centered"><Eyebrow>Lo que permanece</Eyebrow><h2>Programar menos no significa<br/><em>entender menos</em>.</h2><Pills step={step} items={['Arquitectura','Modelado','Seguridad','Concurrencia','Testing','Dominio']}/></div>,
   },
   {
     id: 'valor', title: 'La ecuación del valor', fragments: 3,
+    stepNotes: ['El código se abarata. Preguntar dónde queda nuestro valor.', 'Contexto: conocer la situación real antes de pedir código.', 'Criterio: elegir entre soluciones y detectar errores.', 'Responsabilidad: responder por el resultado. Leer la ecuación completa.'],
     notes: 'Esta es la tesis condensada. Código abundante no equivale a producto correcto. Explicar brevemente cada sumando y reservar «responsabilidad» para el final.',
-    content: (step) => <div><Eyebrow>La nueva ecuación</Eyebrow><h2>El código se abarata.<br/>El criterio se revaloriza.</h2><div className="equation"><Reveal at={1} step={step}><span>contexto</span></Reveal><b>+</b><Reveal at={2} step={step}><span>criterio</span></Reveal><b>+</b><Reveal at={3} step={step}><span>responsabilidad</span></Reveal><strong>= valor</strong></div></div>,
+    content: (step) => <div><Eyebrow>La nueva ecuación</Eyebrow><h2>El código se abarata.<br/>El criterio se revaloriza.</h2><div className="equation"><Reveal at={1} step={step}><span>contexto</span></Reveal><Reveal at={2} step={step}><div className="equation-term"><b>+</b><span>criterio</span></div></Reveal><Reveal at={3} step={step}><div className="equation-term"><b>+</b><span>responsabilidad</span><strong>= valor</strong></div></Reveal></div></div>,
   },
   {
     id: 'flujo', title: 'Una relación profesional sana', fragments: 4,
+    stepNotes: ['Introducir el protocolo como práctica que se puede aplicar mañana.', 'Definir el objetivo y las restricciones.', 'Explorar alternativas con la IA.', 'Verificar con pruebas, datos y revisión.', 'Decidir y asumir la responsabilidad humana.'],
     notes: 'Presentar un flujo práctico que la audiencia pueda llevarse. Definir antes de pedir, pedir alternativas, verificar con pruebas y decidir nosotros. Señalar que delegamos producción, no responsabilidad.',
     content: (step) => <div><Eyebrow>Protocolo de consulta</Eyebrow><h2>Delegar la producción.<br/>No delegar la decisión.</h2><div className="process-line">{['Definir','Explorar','Verificar','Decidir'].map((x,i)=><Reveal at={i+1} step={step} key={x}><div><span>{i+1}</span><strong>{x}</strong></div></Reveal>)}</div></div>,
   },
   {
     id: 'donde', title: 'Dónde aportamos valor', fragments: 4,
+    stepNotes: ['Llevar la charla del código a las personas afectadas.', 'Qué problema merece resolverse: priorizar.', 'Qué compromiso es aceptable: reconocer costes y límites.', 'A quién afecta la decisión: mirar más allá del usuario inmediato.', 'Quién responde cuando sale mal: cerrar con responsabilidad.'],
     notes: 'Bajar del plano técnico al humano. La organización necesita a alguien que entienda qué importa, para quién y qué consecuencias acepta. La IA propone; nosotros respondemos.',
     content: (step) => <div><Eyebrow>La parte que no cabe en el prompt</Eyebrow><h2>Sabemos cosas que el modelo<br/>no puede vivir.</h2><NumberedList step={step} items={[{title:'Qué problema merece resolverse'},{title:'Qué compromiso es aceptable'},{title:'A quién afecta la decisión'},{title:'Quién responde cuando sale mal'}]}/></div>,
   },
   {
     id: 'cierre', title: 'Entender importa más',
+    stepNotes: ['La oveja ya está integrada en una red guiada por una mano humana. Leer la cita despacio; pausa antes de «parecer». Cerrar con la última frase y no avanzar.'],
     notes: 'La oveja ya forma parte de una red, pero el hilo coral continúa en una mano humana: guía y responsabilidad. Cerrar despacio. La primera frase provoca risa; la segunda deja la idea. Terminar aquí.',
     content: () => <StoryScene kind="electric" stage={4} climax><div className="electric-climax-copy"><BigQuote>La IA no ha hecho innecesario saber programar. Ha hecho más fácil <em>parecer</em> que sabemos programar.</BigQuote><p>Por eso entender lo que hacemos importa más que nunca.</p></div></StoryScene>,
   },

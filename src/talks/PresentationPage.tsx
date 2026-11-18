@@ -13,6 +13,7 @@ export function PresentationPage() {
 }
 
 function Presentation({ talk }: { talk: NonNullable<ReturnType<typeof getTalk>> }) {
+  useEffect(() => { document.title = `${talk.shortTitle} · Tech Talk` }, [talk.shortTitle])
   const { state, next, previous, room, relayStatus, newRoom } = usePresentation(talk)
   const [helpOpen, setHelpOpen] = useState(false)
   const [pairingOpen, setPairingOpen] = useState(false)
@@ -69,7 +70,7 @@ function Presentation({ talk }: { talk: NonNullable<ReturnType<typeof getTalk>> 
     <main className={`presentation theme-${talk.theme} ${controlsVisible ? 'controls-visible' : ''}`} onMouseMove={showControls}>
       <div className="ambient" aria-hidden="true"><i/><i/><i/></div>
       <section className="slide-stage">
-        <div className="slide-content">{slide.content(state.step)}</div>
+        <div className="slide-content" key={slide.id}>{slide.content(state.step)}</div>
         <div className="slide-meta"><span>{talk.number} / {talk.shortTitle}</span><span>{String(state.slide + 1).padStart(2, '0')}</span></div>
       </section>
       <div className="progress-track"><i style={{ width: `${progress}%` }}/></div>

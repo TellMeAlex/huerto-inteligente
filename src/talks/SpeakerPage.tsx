@@ -13,6 +13,7 @@ export function SpeakerPage() {
 }
 
 function Speaker({ talk }: { talk: NonNullable<ReturnType<typeof getTalk>> }) {
+  useEffect(() => { document.title = `${talk.shortTitle} · Vista del ponente` }, [talk.shortTitle])
   const { state, next, previous, goTo, room, relayStatus, newRoom } = usePresentation(talk)
   const [pairingOpen, setPairingOpen] = useState(false)
   useWakeLock()
@@ -56,7 +57,7 @@ function Speaker({ talk }: { talk: NonNullable<ReturnType<typeof getTalk>> }) {
       <section className="speaker-grid">
         <div className="speaker-main">
           <div className="speaker-label"><span>EN PANTALLA</span><strong>{state.slide + 1} / {talk.slides.length}</strong></div>
-          <div className="speaker-slide"><div className="slide-content">{current.content(state.step)}</div>
+          <div className="speaker-slide"><div className="slide-content" key={current.id}>{current.content(state.step)}</div>
             {/* Mobile only: compact timer over the slide preview to free vertical space. */}
             <div className="timer-overlay"><button onClick={toggleTimer} aria-label={`${timerLabel} cronómetro`}><span aria-hidden="true">{startedAt ? '❚❚' : '▶'}</span><strong>{formattedElapsed}</strong></button><button className="quiet" onClick={resetTimer} aria-label="Reiniciar cronómetro">↺</button></div>
           </div>
@@ -66,10 +67,10 @@ function Speaker({ talk }: { talk: NonNullable<ReturnType<typeof getTalk>> }) {
           <button role="tab" aria-selected={mobilePanel === 'next'} onClick={() => setMobilePanel('next')}>Siguiente{upcoming ? ` · ${String(state.slide + 2).padStart(2, '0')}` : ''}</button>
         </div>
         <aside className="speaker-side">
-          <div className="next-panel"><div className="speaker-label"><span>SIGUIENTE</span></div>{upcoming ? <div className="speaker-slide next"><div className="slide-content">{upcoming.content(0)}</div></div> : <div className="end-card">FIN</div>}</div>
+          <div className="next-panel"><div className="speaker-label"><span>SIGUIENTE</span></div>{upcoming ? <div className="speaker-slide next"><div className="slide-content" key={upcoming.id}>{upcoming.content(0)}</div></div> : <div className="end-card">FIN</div>}</div>
           <div className="timer-panel"><div><small>TIEMPO</small><strong>{formattedElapsed}</strong></div><button onClick={toggleTimer}>{timerLabel}</button><button className="quiet" onClick={resetTimer}>↺</button></div>
         </aside>
-        <section className="notes-panel"><div className="speaker-label"><span>NOTAS · {current.title}</span></div><p>{current.notes}</p></section>
+        <section className="notes-panel"><div className="speaker-label"><span>NOTAS · {current.title}</span><strong>{state.step} / {current.fragments ?? 0} revelaciones</strong></div>{current.stepNotes && <div className="speaker-cue"><span>AHORA</span><p>{current.stepNotes[state.step]}</p></div>}<p>{current.notes}</p></section>
       </section>
       <footer className="speaker-controls">
         <button onClick={previous}>← <span>Anterior</span></button>
