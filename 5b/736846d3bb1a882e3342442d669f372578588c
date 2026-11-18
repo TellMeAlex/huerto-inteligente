@@ -1,0 +1,22 @@
+src/talks/PresentationPage.tsx
+  h_72f012d83ce049 16,73
+src/talks/SpeakerPage.tsx
+  h_72f012d83ce049 16,60,70,73
+src/talks/talks.css
+  h_72f012d83ce049 150-151,296
+src/talks/talks.tsx
+  h_72f012d83ce049 92,98,104,110,116,122,128,130,134,140,146
+src/talks/types.ts
+  h_72f012d83ce049 10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "5b736846d3bb1a882e3342442d669f372578588c",
+  "prompts": {},
+  "humans": {
+    "h_72f012d83ce049": {
+      "author": "Alejandro de la Fuente de la Rosa <alejandrodlfdlr@ext.inditex.com>"
+    }
+  }
+}
