@@ -323,6 +323,8 @@
 .theme-fire .pill-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:78cqw;max-width:100%;gap:1.2cqw}
 .theme-fire .pill{display:grid;place-items:center;min-height:6.5cqw;padding:.8cqw 1cqw;font-size:2.1cqw;text-align:center}
 .theme-fire .fine-levels span{font-size:2.4cqw}
+.theme-fire .fine-icon{width:4.2cqw;height:4.2cqw;color:var(--accent);flex:none}
+.theme-fire .fine-levels .danger .fine-icon{color:var(--bg)}
 .theme-fire .fine-levels strong{font-size:2.35cqw}
 .theme-fire .fine-levels p{font-size:1.8cqw;line-height:1.3}
 .theme-fire .distinguish{gap:1.2cqw}

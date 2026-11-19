@@ -57,6 +57,14 @@ function FireScene({ stage, children, climax = false }: { stage: 1 | 2 | 3 | 4; 
   )
 }
 
+function FineIcon({ kind }: { kind: 'observe' | 'experiment' | 'stop' }) {
+  return <svg className="fine-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    {kind === 'observe' && <><path d="M5 24c5-8 11-12 19-12s14 4 19 12c-5 8-11 12-19 12S10 32 5 24Z"/><circle cx="24" cy="24" r="6"/></>}
+    {kind === 'experiment' && <><path d="M18 6h12M21 6v15L10 39a3 3 0 0 0 3 4h22a3 3 0 0 0 3-4L27 21V6"/><path d="M16 32h16"/><circle cx="25" cy="27" r="1" fill="currentColor" stroke="none"/></>}
+    {kind === 'stop' && <><path d="M16 5h16l11 11v16L32 43H16L5 32V16L16 5Z"/><path d="M24 14v14"/><circle cx="24" cy="34" r="1.5" fill="currentColor" stroke="none"/></>}
+  </svg>
+}
+
 type HotspotProps = { x: number; y: number; on: boolean; current?: boolean; icon?: string; label?: string; variant?: 'ring' | 'bare' | 'float' | 'crawl' | 'tag' | 'verified' }
 
 /** Marker pinned to an illustration, positioned in % of the 16:9 scene. */
@@ -273,7 +281,7 @@ const fireSlides: Talk['slides'] = [
   {
     id:'semantica', title:'Tres significados de “fine”', fragments:3,
     notes:'Reapropiarse del meme. “Fine” no es negar. Es aceptar incertidumbre sin renunciar al juicio. Dar un ejemplo breve de cada nivel.',
-    content:(step)=><div><Eyebrow>Una filosofía con matices</Eyebrow><h2>“Fine” necesita contexto.</h2><div className="fine-levels"><Reveal at={1} step={step}><div><span>●</span><strong>Esto es incómodo</strong><p>Podemos observar.</p></div></Reveal><Reveal at={2} step={step}><div><span>▲</span><strong>Esto es incierto</strong><p>Podemos experimentar.</p></div></Reveal><Reveal at={3} step={step}><div className="danger"><span>✦</span><strong>Esto es peligroso</strong><p>Tenemos que parar.</p></div></Reveal></div></div>,
+    content:(step)=><div><Eyebrow>Una filosofía con matices</Eyebrow><h2>“Fine” necesita contexto.</h2><div className="fine-levels"><Reveal at={1} step={step}><div><FineIcon kind="observe"/><strong>Esto es incómodo</strong><p>Podemos observar.</p></div></Reveal><Reveal at={2} step={step}><div><FineIcon kind="experiment"/><strong>Esto es incierto</strong><p>Podemos experimentar.</p></div></Reveal><Reveal at={3} step={step}><div className="danger"><FineIcon kind="stop"/><strong>Esto es peligroso</strong><p>Tenemos que parar.</p></div></Reveal></div></div>,
   },
   {
     id:'madurez', title:'Madurez técnica', fragments:3,
