@@ -42,7 +42,7 @@
 .slide-content h1 em, .slide-content h2 em, .closing-layout em { color:var(--accent); font-style:normal; }
 .slide-eyebrow { color:var(--accent); font:500 1cqw/1 'DM Mono',monospace; text-transform:uppercase; letter-spacing:.16em; margin-bottom:2cqw; }
 .lead { color:var(--muted); font-size:1.65cqw; line-height:1.4; margin:2.4cqw 0 0; }
-.slide-meta { position:absolute; z-index:3; left:3.2cqw; right:3.2cqw; bottom:2.2cqw; display:flex; justify-content:space-between; color:var(--muted); font:500 .75cqw/1 'DM Mono',monospace; letter-spacing:.1em; text-transform:uppercase; }
+.slide-meta { position:absolute; z-index:3; left:3.2cqw; right:3.2cqw; bottom:2.2cqw; display:flex; justify-content:flex-end; color:var(--muted); font:500 .75cqw/1 'DM Mono',monospace; letter-spacing:.1em; text-transform:uppercase; }
 .progress-track { position:absolute; bottom:0; left:0; right:0; height:4px; background:rgba(255,255,255,.06); z-index:10; }
 .progress-track i { display:block; height:100%; background:var(--accent); transition:width .35s ease; }
 .ambient { position:absolute; inset:0; overflow:hidden; pointer-events:none; }

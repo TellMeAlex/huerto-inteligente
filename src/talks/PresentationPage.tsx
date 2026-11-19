@@ -71,7 +71,7 @@ function Presentation({ talk }: { talk: NonNullable<ReturnType<typeof getTalk>> 
       <div className="ambient" aria-hidden="true"><i/><i/><i/></div>
       <section className="slide-stage">
         <div className="slide-content" key={slide.id}>{slide.content(state.step)}</div>
-        <div className="slide-meta"><span>{talk.number} / {talk.shortTitle}</span><span>{String(state.slide + 1).padStart(2, '0')}</span></div>
+        <div className="slide-meta"><span>{String(state.slide + 1).padStart(2, '0')}</span></div>
       </section>
       <div className="progress-track"><i style={{ width: `${progress}%` }}/></div>
       <nav className="presentation-controls" aria-label="Controles de presentación">
