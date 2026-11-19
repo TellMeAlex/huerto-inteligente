@@ -50,6 +50,7 @@ function FireScene({ stage, children, climax = false }: { stage: 1 | 2 | 3 | 4; 
     <div className={`fire-scene stage-${stage} ${climax ? 'is-climax' : ''}`}>
       <img src={assetPath} alt="" aria-hidden="true" />
       <div className="fire-scene-shade" />
+      {stage === 1 && <div className="fire-flicker" aria-hidden="true" />}
       <div className="fire-scene-copy">{children}</div>
       <span className="fire-stage-label">FUEGO · 0{stage}</span>
     </div>
@@ -237,7 +238,7 @@ const fireSlides: Talk['slides'] = [
   {
     id:'portada', title:'Cuando “This is fine” se convirtió en mi filosofía para la IA',
     notes:'La pequeña llama de la esquina es el primer personaje de la charla. Presentar el tono como un manual de supervivencia: reconocemos el caos, nos reímos y salimos con prácticas concretas. La misma llama volverá, cada vez más grande.',
-    content:()=> <FireScene stage={1}><div className="fire-cover-copy"><Eyebrow>03 · Manual de supervivencia</Eyebrow><h1>Cuando<br/><em>“This is fine”</em><br/>se convirtió en mi filosofía para la IA</h1><p className="lead">Trabajar mientras el futuro arde educadamente.</p></div></FireScene>,
+    content:()=> <FireScene stage={1}><div className="fire-cover-copy"><Eyebrow>Manual de supervivencia</Eyebrow><h1>Cuando<br/><em>“This is fine”</em><br/>se convirtió en mi filosofía para la IA</h1><p className="lead">Trabajar mientras el futuro arde educadamente.</p></div></FireScene>,
   },
   {
     id:'velocidad', title:'Legacy en el kickoff', fragments:3,

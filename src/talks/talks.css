@@ -59,6 +59,8 @@
 .fire-scene{position:absolute;inset:-5.5cqw -7.2cqw -4.6cqw;overflow:hidden;background:#8de5ad;color:#171310}
 .fire-scene>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .fire-scene-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(139,231,172,.08) 0%,rgba(139,231,172,0) 48%)}
+.fire-flicker{position:absolute;right:-1%;bottom:0;width:18%;height:38%;pointer-events:none;background:radial-gradient(ellipse at 60% 65%,rgba(255,245,104,.52),rgba(255,133,21,.32) 42%,transparent 73%);mix-blend-mode:screen;filter:blur(.8cqw);transform-origin:65% 85%;animation:fire-flicker 2.4s ease-in-out infinite alternate}
+@keyframes fire-flicker{from{opacity:.25;transform:scale(.93) rotate(-2deg)}to{opacity:.7;transform:scale(1.07) rotate(2deg)}}
 .fire-scene-copy{position:absolute;inset:0;padding:5.5cqw 7.2cqw 4.6cqw;display:flex;align-items:center}
 .fire-cover-copy,.fire-compact-copy{width:49cqw}
 .fire-cover-copy h1{font-size:4.65cqw;line-height:.94;letter-spacing:-.05em;color:#171310}
@@ -327,7 +329,7 @@
 .theme-fire .distinguish span{font-size:2.2cqw;padding:1.4cqw 2cqw}
 
 .speaker-cue{margin:.5rem 0 .8rem;padding:.75rem 1rem;border-left:4px solid var(--accent);background:#1a1d23}.speaker-cue span{font:700 .7rem 'DM Mono',monospace;letter-spacing:.12em;color:var(--accent)}.speaker-cue p{color:#fff;font-size:1.15rem;margin:.25rem 0 0}
-@media(prefers-reduced-motion:reduce){.reveal{transition:none}.presentation-controls{transition:none}.story-scene>img,.story-scene-hotspots,.hotspot,.hotspot>b,.hotspot>i::after,.growth-node>span::after{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.reveal{transition:none}.presentation-controls{transition:none}.story-scene>img,.story-scene-hotspots,.hotspot,.hotspot>b,.hotspot>i::after,.growth-node>span::after,.fire-flicker{animation:none!important}}
 
 /* Remote control pairing (phone as speaker remote via ntfy.sh relay) */
 .relay-status{display:inline-flex;align-items:center;gap:.5rem;font:500 .7rem 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;color:#9a9da3}
